@@ -2,7 +2,8 @@
 [![License][license-img]][license]
 ![Downloads][download]
 
-  
+
+<img src="https://github.com/cyberark/PipeViewer/blob/assets/pipeviewer_logo.png" width="260">   
 A GUI tool for viewing Windows Named Pipes and searching for insecure permissions.  
 
 ## Overview
