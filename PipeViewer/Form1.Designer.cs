@@ -29,25 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelTotalNamedPipes = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonClear = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonFilter = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonHighLight = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonGrid = new System.Windows.Forms.ToolStripButton();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
-            this.contextMenuStripRightClickGridView = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnIntegrityLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnPermissions = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,6 +54,24 @@
             this.ColumnLastAccessTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnLastWriteTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnChangeTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelTotalNamedPipes = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonClear = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFilter = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonHighLight = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonGrid = new System.Windows.Forms.ToolStripButton();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.contextMenuStripRightClickGridView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -117,169 +118,6 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(955, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.aboutToolStripMenuItem.Text = "About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelTotalNamedPipes});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 432);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(955, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabelTotalNamedPipes
-            // 
-            this.toolStripStatusLabelTotalNamedPipes.Name = "toolStripStatusLabelTotalNamedPipes";
-            this.toolStripStatusLabelTotalNamedPipes.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabelTotalNamedPipes.Text = "toolStripStatusLabel1";
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonRefresh,
-            this.toolStripButtonClear,
-            this.toolStripButtonFilter,
-            this.toolStripButtonFind,
-            this.toolStripButtonHighLight,
-            this.toolStripButtonGrid});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(955, 25);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButtonRefresh
-            // 
-            this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRefresh.Image = global::PipeViewer.Properties.Resources.refresh;
-            this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
-            this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonRefresh.Text = "Refresh";
-            this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
-            // 
-            // toolStripButtonClear
-            // 
-            this.toolStripButtonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonClear.Image = global::PipeViewer.Properties.Resources.eraser;
-            this.toolStripButtonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonClear.Name = "toolStripButtonClear";
-            this.toolStripButtonClear.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonClear.Text = "Clear (Ctrl+X)";
-            this.toolStripButtonClear.Click += new System.EventHandler(this.toolStripButtonClear_Click);
-            // 
-            // toolStripButtonFilter
-            // 
-            this.toolStripButtonFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonFilter.Image = global::PipeViewer.Properties.Resources.filter;
-            this.toolStripButtonFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonFilter.Name = "toolStripButtonFilter";
-            this.toolStripButtonFilter.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonFilter.Text = "Filter (Ctrl+L)";
-            this.toolStripButtonFilter.Click += new System.EventHandler(this.toolStripButtonFilter_Click);
-            // 
-            // toolStripButtonFind
-            // 
-            this.toolStripButtonFind.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonFind.Image = global::PipeViewer.Properties.Resources.find;
-            this.toolStripButtonFind.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonFind.Name = "toolStripButtonFind";
-            this.toolStripButtonFind.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonFind.Text = "Find (Ctrl+F)";
-            this.toolStripButtonFind.Click += new System.EventHandler(this.toolStripButtonFind_Click);
-            // 
-            // toolStripButtonHighLight
-            // 
-            this.toolStripButtonHighLight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonHighLight.Image = global::PipeViewer.Properties.Resources.highlighter;
-            this.toolStripButtonHighLight.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonHighLight.Name = "toolStripButtonHighLight";
-            this.toolStripButtonHighLight.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonHighLight.Text = "HighLight (Ctrk+H)";
-            this.toolStripButtonHighLight.Click += new System.EventHandler(this.toolStripButtonHighLight_Click);
-            // 
-            // toolStripButtonGrid
-            // 
-            this.toolStripButtonGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonGrid.Image = global::PipeViewer.Properties.Resources.grid_disable;
-            this.toolStripButtonGrid.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonGrid.Name = "toolStripButtonGrid";
-            this.toolStripButtonGrid.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonGrid.Text = "Show Grid";
-            this.toolStripButtonGrid.Click += new System.EventHandler(this.toolStripButtonGrid_Click);
-            // 
-            // hScrollBar1
-            // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 414);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(955, 18);
-            this.hScrollBar1.TabIndex = 5;
-            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
-            // 
-            // contextMenuStripRightClickGridView
-            // 
-            this.contextMenuStripRightClickGridView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyRowToolStripMenuItem,
-            this.copyCellToolStripMenuItem});
-            this.contextMenuStripRightClickGridView.Name = "contextMenuStripRightClickGridView";
-            this.contextMenuStripRightClickGridView.Size = new System.Drawing.Size(129, 48);
-            // 
-            // copyRowToolStripMenuItem
-            // 
-            this.copyRowToolStripMenuItem.Name = "copyRowToolStripMenuItem";
-            this.copyRowToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.copyRowToolStripMenuItem.Text = "Copy Row";
-            this.copyRowToolStripMenuItem.Click += new System.EventHandler(this.copyRowToolStripMenuItem_Click);
-            // 
-            // copyCellToolStripMenuItem
-            // 
-            this.copyCellToolStripMenuItem.Name = "copyCellToolStripMenuItem";
-            this.copyCellToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.copyCellToolStripMenuItem.Text = "Copy Cell";
-            this.copyCellToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save...";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // ColumnName
             // 
@@ -427,6 +265,169 @@
             this.ColumnChangeTime.ReadOnly = true;
             this.ColumnChangeTime.Visible = false;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(955, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.saveToolStripMenuItem.Text = "Save...";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Text = "About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelTotalNamedPipes});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 432);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(955, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelTotalNamedPipes
+            // 
+            this.toolStripStatusLabelTotalNamedPipes.Name = "toolStripStatusLabelTotalNamedPipes";
+            this.toolStripStatusLabelTotalNamedPipes.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabelTotalNamedPipes.Text = "toolStripStatusLabel1";
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonRefresh,
+            this.toolStripButtonClear,
+            this.toolStripButtonFilter,
+            this.toolStripButtonFind,
+            this.toolStripButtonHighLight,
+            this.toolStripButtonGrid});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(955, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButtonRefresh
+            // 
+            this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRefresh.Image = global::PipeViewer.Properties.Resources.refresh;
+            this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
+            this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRefresh.Text = "Refresh";
+            this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
+            // 
+            // toolStripButtonClear
+            // 
+            this.toolStripButtonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonClear.Image = global::PipeViewer.Properties.Resources.eraser;
+            this.toolStripButtonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonClear.Name = "toolStripButtonClear";
+            this.toolStripButtonClear.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonClear.Text = "Clear (Ctrl+X)";
+            this.toolStripButtonClear.Click += new System.EventHandler(this.toolStripButtonClear_Click);
+            // 
+            // toolStripButtonFilter
+            // 
+            this.toolStripButtonFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonFilter.Image = global::PipeViewer.Properties.Resources.filter;
+            this.toolStripButtonFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFilter.Name = "toolStripButtonFilter";
+            this.toolStripButtonFilter.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonFilter.Text = "Filter (Ctrl+L)";
+            this.toolStripButtonFilter.Click += new System.EventHandler(this.toolStripButtonFilter_Click);
+            // 
+            // toolStripButtonFind
+            // 
+            this.toolStripButtonFind.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonFind.Image = global::PipeViewer.Properties.Resources.find;
+            this.toolStripButtonFind.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFind.Name = "toolStripButtonFind";
+            this.toolStripButtonFind.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonFind.Text = "Find (Ctrl+F)";
+            this.toolStripButtonFind.Click += new System.EventHandler(this.toolStripButtonFind_Click);
+            // 
+            // toolStripButtonHighLight
+            // 
+            this.toolStripButtonHighLight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonHighLight.Image = global::PipeViewer.Properties.Resources.highlighter;
+            this.toolStripButtonHighLight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonHighLight.Name = "toolStripButtonHighLight";
+            this.toolStripButtonHighLight.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonHighLight.Text = "HighLight (Ctrk+H)";
+            this.toolStripButtonHighLight.Click += new System.EventHandler(this.toolStripButtonHighLight_Click);
+            // 
+            // toolStripButtonGrid
+            // 
+            this.toolStripButtonGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonGrid.Image = global::PipeViewer.Properties.Resources.grid_disable;
+            this.toolStripButtonGrid.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonGrid.Name = "toolStripButtonGrid";
+            this.toolStripButtonGrid.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonGrid.Text = "Show Grid";
+            this.toolStripButtonGrid.Click += new System.EventHandler(this.toolStripButtonGrid_Click);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 414);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(955, 18);
+            this.hScrollBar1.TabIndex = 5;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // contextMenuStripRightClickGridView
+            // 
+            this.contextMenuStripRightClickGridView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyRowToolStripMenuItem,
+            this.copyCellToolStripMenuItem});
+            this.contextMenuStripRightClickGridView.Name = "contextMenuStripRightClickGridView";
+            this.contextMenuStripRightClickGridView.Size = new System.Drawing.Size(129, 48);
+            // 
+            // copyRowToolStripMenuItem
+            // 
+            this.copyRowToolStripMenuItem.Name = "copyRowToolStripMenuItem";
+            this.copyRowToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.copyRowToolStripMenuItem.Text = "Copy Row";
+            this.copyRowToolStripMenuItem.Click += new System.EventHandler(this.copyRowToolStripMenuItem_Click);
+            // 
+            // copyCellToolStripMenuItem
+            // 
+            this.copyCellToolStripMenuItem.Name = "copyCellToolStripMenuItem";
+            this.copyCellToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.copyCellToolStripMenuItem.Text = "Copy Cell";
+            this.copyCellToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,9 +438,9 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.ShowIcon = false;
             this.Text = "PipeViewer";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
