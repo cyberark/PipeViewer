@@ -113,7 +113,7 @@ namespace PipeViewer.Control
             Change permissions             00000000 00010100 00000000 00000000 : 00140000 -> RW (accesschk.exe)
             Change ownership               00000000 00011000 00000000 00000000 : 00180000 -> RW (accesschk.exe)
 
-                                                          
+                                                                                                 
             R ("List folder / Read data", "Traverse folder / execute")                -> 00000000 00010000 00000000 00100001 : 0x100021   (bits 0, 5, and 20) 
             W ("Create files / write data", "Create folders / append data", "Delete") -> 00000000 00010001 00000000 00000110 : 0x110006   (bits 1, 2, 16, and 20)
             RW ("Change permissions", "Change ownership")                             -> 00000000 00011100 00000000 00000000 : 0x1c0000   (bits 18, 19, and 20)
@@ -149,27 +149,69 @@ namespace PipeViewer.Control
             // We currently left it 0.
             string permissions = "";
 
-            //byte[] byteArray = BitConverter.GetBytes(i_AccessMask);
-            byte[] binaryArray = Convert.ToString(i_AccessMask, 2)
-                                .PadLeft(32, '0')
-                                .Select(c => byte.Parse(c.ToString()))
-                                .Reverse()
-                                .ToArray();
 
-            if ((binaryArray[0] == 1 || binaryArray[5] == 1))// && binaryArray[20] == 1)
+            if ((i_AccessMask & (uint)PermissionsAccessMask.Full) == (uint)PermissionsAccessMask.Full)
             {
-                permissions += "R";
-            }
-
-            if ((binaryArray[1] == 1 || binaryArray[2] == 1 || binaryArray[16] == 1))// && binaryArray[20] == 1)
+                permissions = "Full";
+            } else if ((i_AccessMask & (uint)PermissionsAccessMask.Modify) == (uint)PermissionsAccessMask.Modify)
             {
-                permissions += "W";
-            }
-
-            if ((binaryArray[18] == 1 || binaryArray[19] == 1) )//&& binaryArray[20] == 1)
+                permissions = "RWX";
+            } else if ((i_AccessMask & (uint)PermissionsAccessMask.ReadWriteExecute) == (uint)PermissionsAccessMask.ReadWriteExecute)
+            {
+                permissions = "RWX";
+            } else if ((i_AccessMask & (uint)PermissionsAccessMask.ReadWrite) == (uint)PermissionsAccessMask.ReadWrite)
             {
                 permissions = "RW";
+            } else if((i_AccessMask & (uint)PermissionsAccessMask.Write) == (uint)PermissionsAccessMask.Write)
+            {
+                permissions = "W";
+            } else if((i_AccessMask & (uint)PermissionsAccessMask.ReadAndExecute) == (uint)PermissionsAccessMask.ReadAndExecute)
+            {
+                permissions = "RX";
+            } else if ((i_AccessMask & (uint)PermissionsAccessMask.Read) == (uint)PermissionsAccessMask.Read)
+            {
+                permissions = "R";
+            } else
+            {
+                permissions = "(special)";
             }
+
+/*
+             * 
+             * 
+             *     if (i_AccessMask == 1180059) // 00010010 00000001 10011011
+                    {
+                        int a = 2; 
+
+                    }
+             * *
+             * When using the binary check, it gave RW for pipes that according to the standard security properties have R permissions.
+             * We change it to check based on hardcoded values for the permissions.
+*/
+
+
+            //byte[] byteArray = BitConverter.GetBytes(i_AccessMask);
+            //byte[] binaryArray = Convert.ToString(i_AccessMask, 2)
+            //                    .PadLeft(32, '0')
+            //                    .Select(c => byte.Parse(c.ToString()))
+            //                    .Reverse()
+            //                    .ToArray();
+
+            
+            //if ((binaryArray[0] == 1 || binaryArray[5] == 1))// && binaryArray[20] == 1)
+            //{
+            //    permissions += "R";
+            //}
+
+            //if ((binaryArray[1] == 1 || binaryArray[2] == 1 || binaryArray[16] == 1))// && binaryArray[20] == 1)
+            //{
+            //    permissions += "W";
+            //}
+            
+            //if ((binaryArray[18] == 1 || binaryArray[19] == 1) )//&& binaryArray[20] == 1)
+            //{
+            //    permissions = "RW";
+            //}
 
             //uint readPermissions = ((uint)PermissionsAccessMask.ListFolderReadData | (uint)PermissionsAccessMask.TraverseFolderExecute) & i_AccessMask;
 
