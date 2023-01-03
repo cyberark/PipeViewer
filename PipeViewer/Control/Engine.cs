@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using NtApiDotNet;
 namespace PipeViewer.Control
 {
@@ -11,14 +12,21 @@ namespace PipeViewer.Control
             Client
         }
 
+
+
         public static NtNamedPipeFileBase GetNamedPipeObject(string i_NamedPipe, NamedPipeFunctionEndType e_EndType)
         {
             NtNamedPipeFileBase namedPipeFileObject = null;
 
             i_NamedPipe = i_NamedPipe.Replace(@"\\.\pipe\", @"\Device\NamedPipe\");
-            FileShareMode ShareMode = FileShareMode.Read | FileShareMode.Write;
-            FileOpenOptions Options = FileOpenOptions.SynchronousIoNonAlert;
-            FileAccessRights Access = FileAccessRights.GenericRead | FileAccessRights.GenericWrite | FileAccessRights.Synchronize;
+            //FileShareMode ShareMode = FileShareMode.Read | FileShareMode.Write;
+            //FileOpenOptions Options = FileOpenOptions.SynchronousIoNonAlert;
+            //FileAccessRights Access = FileAccessRights.GenericRead | FileAccessRights.GenericWrite | FileAccessRights.Synchronize;
+
+            FileShareMode ShareMode = FileShareMode.None;
+            FileOpenOptions Options = FileOpenOptions.None;
+            FileAccessRights Access = FileAccessRights.MaximumAllowed;
+            
 
             if (e_EndType == NamedPipeFunctionEndType.Client)
             {
@@ -30,6 +38,7 @@ namespace PipeViewer.Control
             return namedPipeFileObject;
         }
 
+ 
         // https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools/blob/c02ed8ba04324e54a0a188ab9877ee6aa372dfac/NtObjectManager/Cmdlets/Object/GetNtNamedPipeFileCmdlet.cs
         public static NtNamedPipeFileBase GetNamedPipeClientObject(string i_NamedPipe, FileShareMode i_ShareMode, FileOpenOptions i_Options, FileAccessRights i_Access)
         {
@@ -47,9 +56,8 @@ namespace PipeViewer.Control
                     // https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools/blob/c02ed8ba04324e54a0a188ab9877ee6aa372dfac/NtObjectManager/Cmdlets/Object/GetNtNamedPipeFileCmdlet.cs
                     // https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools/blob/c02ed8ba04324e54a0a188ab9877ee6aa372dfac/NtObjectManager/Cmdlets/Object/GetNtFileCmdlet.cs
                     namedPipeFileObject = (NtNamedPipeFileBase)NtFile.Open(obj_attributes, i_Access, i_ShareMode, i_Options);
-
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     // In the future we can write to log
                 }

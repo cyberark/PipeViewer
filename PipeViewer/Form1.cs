@@ -9,10 +9,7 @@ using System.Windows.Forms;
 using PipeViewer.Control;
 using NtApiDotNet;
 using System.Runtime.InteropServices;
-using NamePipeViewer;
-using System.IO.Pipes;
 using System.IO;
-using System.Security.AccessControl;
 using System.Diagnostics;
 
 namespace PipeViewer
@@ -91,10 +88,11 @@ namespace PipeViewer
                dataGridView1,
                new object[] { true });
 
+           //Task.Run(() => Utils.CreateDummyPipeForTesting());
 
             //dummRowsForDebug();
             //dummyLoopRowsForDebug();
-            // Task.Run(() => dummyLoopRowsForDebug());
+            //Task.Run(() => dummyLoopRowsForDebug());
             Task.Run(() => InitializePipeListWithProcesses());
 
             //Thread t = new Thread(new ThreadStart(InitializePipeListWithProcesses));
@@ -152,6 +150,7 @@ namespace PipeViewer
             {
                 addNamedPipeToDataGridView(namedPipe);
             }
+
         }
 
         //private delegate void initializePipeListCallBack();
@@ -174,7 +173,7 @@ namespace PipeViewer
         // https://blog.cjwdev.co.uk/2011/06/28/permissions-not-included-in-net-accessrule-filesystemrights-enum/
         private void addNamedPipeToDataGridView(string i_NamedPipe)
         {
-           //i_NamedPipe = @"\\.\pipe\MyPipe";
+           // i_NamedPipe = @"\\.\pipe\myPipe";
             string permissions;
             if (this.InvokeRequired)
             {
@@ -188,6 +187,7 @@ namespace PipeViewer
                 row.Cells[m_ColumnIndexes[ColumnName.HeaderText]].Value = i_NamedPipe;
 
                 row.DefaultCellStyle.Font = new Font(dataGridView1.DefaultCellStyle.Font, FontStyle.Regular);
+
                 NtNamedPipeFileBase namedPipeObject = Engine.GetNamedPipeObject(i_NamedPipe, Engine.NamedPipeFunctionEndType.Client);
                 if (namedPipeObject == null)
                 {
@@ -205,9 +205,11 @@ namespace PipeViewer
                     {
                         row.Cells[m_ColumnIndexes[ColumnSddl.HeaderText]].Value = namedPipeObject.Sddl;
 
+
                         if (namedPipeObject.SecurityDescriptor.Dacl.Count != 0)
                         {
                             permissions = "";
+
                             foreach (Ace dacl in namedPipeObject.SecurityDescriptor.Dacl)
                             {
                                 permissions += dacl.Type.ToString() + " ";
@@ -216,6 +218,11 @@ namespace PipeViewer
                             }
 
                             row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Value = permissions;
+                        } else
+                        {
+                            row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Value = "NO PERMISSIONS";
+                            //row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Style.Font = new Font(dataGridView1.DefaultCellStyle.Font, FontStyle.Bold);
+                            row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Style.BackColor = Color.Red;
                         }
 
                         row.Cells[m_ColumnIndexes[ColumnOwnerSid.HeaderText]].Value = namedPipeObject.SecurityDescriptor.Owner.Sid.ToString();
@@ -226,27 +233,25 @@ namespace PipeViewer
                         row.Cells[m_ColumnIndexes[ColumnEndPointType.HeaderText]].Value = namedPipeObject.EndPointType;
                         row.Cells[m_ColumnIndexes[ColumnConfiguration.HeaderText]].Value = namedPipeObject.Configuration;
 
-                        row.Cells[m_ColumnIndexes[ColumnClientPID.HeaderText]].Value = getProcessNameWithProcessPIDs(namedPipeObject);
                         row.Cells[m_ColumnIndexes[ColumnPipeType.HeaderText]].Value = namedPipeObject.PipeType;
                         row.Cells[m_ColumnIndexes[ColumnReadMode.HeaderText]].Value = namedPipeObject.ReadMode;
-                        row.Cells[m_ColumnIndexes[ColumnNumberOfLinks.HeaderText]].Value = namedPipeObject.NumberOfLinks;
                         row.Cells[m_ColumnIndexes[ColumnDirectoryGrantedAccess.HeaderText]].Value = namedPipeObject.DirectoryGrantedAccess;
                         row.Cells[m_ColumnIndexes[ColumnGrantedAccess.HeaderText]].Value = namedPipeObject.GrantedAccess;
                         row.Cells[m_ColumnIndexes[ColumnGrantedAccessGeneric.HeaderText]].Value = namedPipeObject.GrantedAccessGeneric;
-
                         row.Cells[m_ColumnIndexes[ColumnHandle.HeaderText]].Value = namedPipeObject.Handle.ToString();
                         row.Cells[m_ColumnIndexes[ColumnCreationTime.HeaderText]].Value = namedPipeObject.CreationTime;
+
+                        row.Cells[m_ColumnIndexes[ColumnClientPID.HeaderText]].Value = getProcessNameWithProcessPIDs(namedPipeObject);
+                        row.Cells[m_ColumnIndexes[ColumnNumberOfLinks.HeaderText]].Value = namedPipeObject.NumberOfLinks;
                         row.Cells[m_ColumnIndexes[ColumnFileCreationTime.HeaderText]].Value = namedPipeObject.FileCreationTime;
                         row.Cells[m_ColumnIndexes[ColumnLastAccessTime.HeaderText]].Value = namedPipeObject.LastAccessTime;
                         row.Cells[m_ColumnIndexes[ColumnLastWriteTime.HeaderText]].Value = namedPipeObject.LastWriteTime;
                         row.Cells[m_ColumnIndexes[ColumnChangeTime.HeaderText]].Value = namedPipeObject.ChangeTime;
-
                     }
                 }
                 catch (Exception)
                 {
-
-                    throw;
+                    // TODO: write to log
                 }
 
 

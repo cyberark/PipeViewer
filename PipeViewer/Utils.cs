@@ -1,4 +1,9 @@
-﻿namespace PipeViewer
+﻿using System;
+using System.IO;
+using System.IO.Pipes;
+using System.Security.AccessControl;
+
+namespace PipeViewer
 {
     public class Utils
     {
@@ -107,54 +112,54 @@
         //};
 
 
-        //public static void CreateDummyPipeForTesting()
-        //{
-        //    // Create a new named pipe server
-        //    //NamedPipeServerStream pipeServer = new NamedPipeServerStream("MyPipe", PipeDirection.InOut, 1, PipeTransmissionMode.Message, PipeOptions.Asynchronous);
-        //    /**
-        //     * This will create a named pipe with the name "myPipe" and full privileges for everyone. 
-        //     * The PipeAccessRights.FullControl flag grants full control over the named pipe to all users, 
-        //     * including the ability to read, write, and execute. 
-        //     * The PipeAccessRights.AccessSystemSecurity flag grants the ability to access the system security descriptor associated with the named pipe.
-        //     * */
+        public static void CreateDummyPipeForTesting()
+        {
+            // Create a new named pipe server
+            //NamedPipeServerStream pipeServer = new NamedPipeServerStream("MyPipe", PipeDirection.InOut, 1, PipeTransmissionMode.Message, PipeOptions.Asynchronous);
+            /**
+             * This will create a named pipe with the name "myPipe" and full privileges for everyone. 
+             * The PipeAccessRights.FullControl flag grants full control over the named pipe to all users, 
+             * including the ability to read, write, and execute. 
+             * The PipeAccessRights.AccessSystemSecurity flag grants the ability to access the system security descriptor associated with the named pipe.
+             * */
 
-        //    // get the pipe security object and add an access rule granting full control to everyone
-        //    PipeSecurity pipeSecurity = new PipeSecurity();
-        //    pipeSecurity.AddAccessRule(new PipeAccessRule("Everyone", PipeAccessRights.FullControl, AccessControlType.Allow));
-        //    // Set DACL to NULL.
-        //    /*
-        //     * The SetAccessRuleProtection method is used to set the DACL to NULL. 
-        //     * The first argument specifies whether to protect the DACL from inheriting access control entries (ACEs) from the parent object. 
-        //     * The second argument specifies whether to protect the DACL from being modified. 
-        //     * Setting both arguments to true will set the DACL to NULL.
-        //     * */
-        //    pipeSecurity.SetAccessRuleProtection(true, true);
+            // get the pipe security object and add an access rule granting full control to everyone
+            PipeSecurity pipeSecurity = new PipeSecurity();
+            //pipeSecurity.AddAccessRule(new PipeAccessRule("Everyone", PipeAccessRights.FullControl, AccessControlType.Allow));
+            // Set DACL to NULL.
+            /*
+             * The SetAccessRuleProtection method is used to set the DACL to NULL. 
+             * The first argument specifies whether to protect the DACL from inheriting access control entries (ACEs) from the parent object. 
+             * The second argument specifies whether to protect the DACL from being modified. 
+             * Setting both arguments to true will set the DACL to NULL.
+             * */
+            pipeSecurity.SetAccessRuleProtection(true, true);
 
-        //    NamedPipeServerStream pipeServer = new NamedPipeServerStream("myPipe", PipeDirection.InOut,
-        //                                        -1, PipeTransmissionMode.Byte, PipeOptions.None, 4096, 4096, pipeSecurity);
+            NamedPipeServerStream pipeServer = new NamedPipeServerStream("myPipe", PipeDirection.InOut,
+                                                -1, PipeTransmissionMode.Byte, PipeOptions.None, 4096, 4096, pipeSecurity);
 
-        //    // Wait for a client to connect
-        //    Console.WriteLine("Waiting for client connection...");
-        //    pipeServer.WaitForConnection();
+            // Wait for a client to connect
+            Console.WriteLine("Waiting for client connection...");
+            pipeServer.WaitForConnection();
 
-        //    Console.WriteLine("Client connected.");
+            Console.WriteLine("Client connected.");
 
-        //    // Read and write to the pipe
-        //    using (StreamReader reader = new StreamReader(pipeServer))
-        //    using (StreamWriter writer = new StreamWriter(pipeServer))
-        //    {
-        //        while (true)
-        //        {
-        //            // Read a message from the client
-        //            string message = reader.ReadLine();
-        //            Console.WriteLine("Received message: " + message);
+            // Read and write to the pipe
+            using (StreamReader reader = new StreamReader(pipeServer))
+            using (StreamWriter writer = new StreamWriter(pipeServer))
+            {
+                while (true)
+                {
+                    // Read a message from the client
+                    string message = reader.ReadLine();
+                    Console.WriteLine("Received message: " + message);
 
-        //            // Write a message to the client
-        //            writer.WriteLine("Hello from the server!");
-        //            writer.Flush();
-        //        }
-        //    }
-        //}
+                    // Write a message to the client
+                    writer.WriteLine("Hello from the server!");
+                    writer.Flush();
+                }
+            }
+        }
 
 
         //public static void dummyLoopRowsForDebug()
