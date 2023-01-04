@@ -1,4 +1,4 @@
-Copyright (c) 2022 CyberArk Software Ltd. All rights reserved
+Copyright (c) 2023 CyberArk Software Ltd. All rights reserved
 
 PipeViewer is using the following open source components:  
 
