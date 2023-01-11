@@ -220,7 +220,7 @@ namespace PipeViewer
                             row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Value = permissions;
                         } else
                         {
-                            row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Value = "NO PERMISSIONS";
+                            row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Value = "NO DACL -> FULL permissions";
                             //row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Style.Font = new Font(dataGridView1.DefaultCellStyle.Font, FontStyle.Bold);
                             row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Style.BackColor = Color.Red;
                         }
