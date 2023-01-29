@@ -34,7 +34,7 @@ https://user-images.githubusercontent.com/11998736/210330948-eb485485-a98a-4232-
 We want to thank James Forshaw ([@tyranid](https://github.com/tyranid)) for creating the open source [NtApiDotNet](https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools/tree/main/NtApiDotNet) which allowed us to get information about named pipes.  
 
 ## License
-Copyright (c) 2022 CyberArk Software Ltd. All rights reserved  
+Copyright (c) 2023 CyberArk Software Ltd. All rights reserved  
 This repository is licensed under  Apache-2.0 License - see [`LICENSE`](LICENSE) for more details.
 
 
