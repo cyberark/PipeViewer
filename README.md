@@ -6,6 +6,8 @@
 <img src="https://github.com/cyberark/PipeViewer/blob/assets/pipeviewer_logo.png" width="260">   
 A GUI tool for viewing Windows Named Pipes and searching for insecure permissions.  
 
+The tool was published as part of a research about Docker named pipes: ["Breaking Docker Named Pipes SYSTEMatically: Docker Desktop Privilege Escalation – Part 1"](https://www.cyberark.com/threat-research-blog/securing-kubernetes-clusters-by-eliminating-risky-permissions).  
+
 ## Overview
 PipeViewer is a GUI tool that allows users to view details about Windows Named pipes and their permissions. It is designed to be useful for security researchers who are interested in searching for named pipes with weak permissions or testing the security of named pipes. With PipeViewer, users can easily view and analyze information about named pipes on their systems, helping them to identify potential security vulnerabilities and take appropriate steps to secure their systems.
 
