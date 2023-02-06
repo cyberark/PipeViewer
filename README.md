@@ -22,6 +22,7 @@ Double click the EXE binary and you will get the list of all named pipes.
 * Export\Import to\from JSON
 
 ## Upcoming Features
+* Mark the pipes the you can access
 * Executer - allows send\receive data to one or more named pipes
 * Properties window for each named pipe by right click
 
