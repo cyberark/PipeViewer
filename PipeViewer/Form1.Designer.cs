@@ -68,6 +68,7 @@
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonHighLight = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGrid = new System.Windows.Forms.ToolStripButton();
+            this.colorPermissionsButton = new System.Windows.Forms.ToolStripButton();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.contextMenuStripRightClickGridView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -330,7 +331,8 @@
             this.toolStripButtonFilter,
             this.toolStripButtonFind,
             this.toolStripButtonHighLight,
-            this.toolStripButtonGrid});
+            this.toolStripButtonGrid,
+            this.colorPermissionsButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(955, 25);
@@ -396,6 +398,16 @@
             this.toolStripButtonGrid.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonGrid.Text = "Show Grid";
             this.toolStripButtonGrid.Click += new System.EventHandler(this.toolStripButtonGrid_Click);
+            // 
+            // colorPermissionsButton
+            // 
+            this.colorPermissionsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.colorPermissionsButton.Image = global::PipeViewer.Properties.Resources.permission;
+            this.colorPermissionsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.colorPermissionsButton.Name = "colorPermissionsButton";
+            this.colorPermissionsButton.Size = new System.Drawing.Size(23, 22);
+            this.colorPermissionsButton.Text = "colorPermissionsButton";
+            this.colorPermissionsButton.Click += new System.EventHandler(this.showPermissionsByColorButton);
             // 
             // hScrollBar1
             // 
@@ -499,6 +511,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLastAccessTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLastWriteTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnChangeTime;
+        private System.Windows.Forms.ToolStripButton colorPermissionsButton;
     }
 }
 

@@ -11,6 +11,11 @@ using NtApiDotNet;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Diagnostics;
+using System.IO.Pipes;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using System.DirectoryServices.AccountManagement;
+
 
 namespace PipeViewer
 {
@@ -31,7 +36,10 @@ namespace PipeViewer
         private IDictionary<string, List<ListViewItem>> m_ExcludeFilterDict = new Dictionary<string, List<ListViewItem>>();
         private IDictionary<string, List<ListViewItem>> m_IncludeHighlightDict = new Dictionary<string, List<ListViewItem>>();
         private IDictionary<string, List<ListViewItem>> m_ExcludeHighlightDict = new Dictionary<string, List<ListViewItem>>();
-
+        private string m_CurrentUserSid;
+        private WindowsIdentity m_CurrentIdentity;
+        private bool m_showPermissionColor = true;
+        private IDictionary<string, string> m_SidDict = new Dictionary<string, string>();
         // https://stackoverflow.com/questions/1936682/how-do-i-display-a-files-properties-dialog-from-c
         // https://stackoverflow.com/a/32503655/2153777
         // https://stackoverflow.com/a/28297300/2153777
@@ -80,7 +88,8 @@ namespace PipeViewer
         {
             InitializeComponent();
             InitalizeColumnsHeaderDictionary();
-
+            m_CurrentIdentity = WindowsIdentity.GetCurrent();
+            m_CurrentUserSid = m_CurrentIdentity.User.ToString();
             typeof(DataGridView).InvokeMember(
                "DoubleBuffered",
                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
@@ -88,7 +97,7 @@ namespace PipeViewer
                dataGridView1,
                new object[] { true });
 
-           //Task.Run(() => Utils.CreateDummyPipeForTesting());
+            //Task.Run(() => Utils.CreateDummyPipeForTesting());
 
             //dummRowsForDebug();
             //dummyLoopRowsForDebug();
@@ -145,12 +154,58 @@ namespace PipeViewer
 
         private void initializePipeList()
         {
+            int numOfPipe = 0;
             String[] listOfPipes = System.IO.Directory.GetFiles(@"\\.\pipe\");
             foreach (var namedPipe in listOfPipes)
             {
                 addNamedPipeToDataGridView(namedPipe);
+                highlightPermittedPipes(namedPipe, numOfPipe);
+                numOfPipe++;
+
+            }
+        }
+
+        private void highlightPermittedPipes(string namdePipe, int numOfPipe)
+        {
+
+            Color color = Color.White;
+            try
+            {
+                PipeSecurity pipeSecurity = new PipeSecurity();
+                pipeSecurity.AddAccessRule(new PipeAccessRule("Everyone", PipeAccessRights.ReadWrite, AccessControlType.Allow));
+
+                using (NamedPipeServerStream server = new NamedPipeServerStream(namdePipe, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.None, 0, 0, pipeSecurity))
+                {
+                    Console.WriteLine("Access control entries:");
+                    foreach (PipeAccessRule rule in pipeSecurity.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount)))
+                    {
+                        Console.WriteLine("User/Group: {0}", rule.IdentityReference);
+                        Console.WriteLine("Access: {0}", rule.AccessControlType);
+                        Console.WriteLine("Rights: {0}", rule.PipeAccessRights);
+                        Console.WriteLine();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: {0}", ex.Message);
+            }
+            WindowsIdentity currentUser = WindowsIdentity.GetCurrent();
+            List<string> groups = new List<string>();
+
+            foreach (IdentityReference group in currentUser.Groups)
+            {
+                try
+                {
+                    SecurityIdentifier sid = group.Translate(typeof(SecurityIdentifier)) as SecurityIdentifier;
+                    NTAccount account = (NTAccount)sid.Translate(typeof(NTAccount));
+                    groups.Add(account.Value);
+
+                }
+                catch { }
             }
 
+            dataGridView1.Rows[numOfPipe].DefaultCellStyle.BackColor = color;
         }
 
         //private delegate void initializePipeListCallBack();
@@ -173,7 +228,7 @@ namespace PipeViewer
         // https://blog.cjwdev.co.uk/2011/06/28/permissions-not-included-in-net-accessrule-filesystemrights-enum/
         private void addNamedPipeToDataGridView(string i_NamedPipe)
         {
-           // i_NamedPipe = @"\\.\pipe\myPipe";
+            // i_NamedPipe = @"\\.\pipe\myPipe";
             string permissions;
             if (this.InvokeRequired)
             {
@@ -201,19 +256,46 @@ namespace PipeViewer
                 // We added try\catch because one specific bug with \\.\pipe\dbxsvc (DropBox). Maybe there is a better way to handle it?
                 try
                 {
+
                     if (namedPipeObject != null)
                     {
                         row.Cells[m_ColumnIndexes[ColumnSddl.HeaderText]].Value = namedPipeObject.Sddl;
 
-
+                        Color cellColor = Color.White;
                         if (namedPipeObject.SecurityDescriptor.Dacl.Count != 0)
                         {
                             permissions = "";
 
                             foreach (Ace dacl in namedPipeObject.SecurityDescriptor.Dacl)
                             {
-                                permissions += dacl.Type.ToString() + " ";
-                                permissions += Engine.ConvertAccessMaskToSimplePermissions(dacl.Mask.Access);
+                                string permissionReadOrWrite = Engine.ConvertAccessMaskToSimplePermissions(dacl.Mask.Access);
+                                string allowedOrNotAllowed = dacl.Type.ToString();
+
+                                // TODO: why adding to a new group doesn't show the new group
+                                foreach (IdentityReference group in m_CurrentIdentity.Groups)
+                                {
+                                    SecurityIdentifier sid = (SecurityIdentifier)group.Translate(typeof(SecurityIdentifier));
+                                    if ((m_CurrentUserSid.Equals(dacl.Sid.ToString()) || sid.Value.Equals(dacl.Sid.ToString())) && allowedOrNotAllowed.Contains("Allowed"))
+                                    {
+                                        if (!m_SidDict.ContainsKey(dacl.Sid.Name))
+                                        {
+                                            m_SidDict.Add(dacl.Sid.Name, dacl.Sid.ToString());
+                                        }
+                                        if (permissionReadOrWrite.Contains("R"))
+                                        {
+                                            cellColor = Color.Yellow;
+                                        }
+                                        if (permissionReadOrWrite.Contains("W") || permissionReadOrWrite.Contains("Full") || permissionReadOrWrite.Contains("RW"))
+                                        {
+                                            cellColor = Color.LightGreen;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Style.BackColor = cellColor;
+                                permissions += allowedOrNotAllowed + " ";
+                                permissions += permissionReadOrWrite;
                                 permissions += " " + dacl.Sid.Name + "; \n";
                             }
 
@@ -268,7 +350,7 @@ namespace PipeViewer
                 {
                     if (m_ProcessPIDsDictionary.TryGetValue(pid, out string processName))
                     {
-                        return processName + " ("+ pid.ToString() + ")";
+                        return processName + " (" + pid.ToString() + ")";
                     }
                     else
                     {
@@ -287,7 +369,7 @@ namespace PipeViewer
                         }
                     }
                 });
-            
+
             return string.Join("; ", processNames.Select(nameAndPid => nameAndPid));
         }
 
@@ -890,6 +972,76 @@ namespace PipeViewer
             File.WriteAllText(filename, dataObject.GetText(TextDataFormat.CommaSeparatedValue).Replace("\n", ""));
         }
 
+        private void showPermissionsByColorButton(object sender, EventArgs e)
+        {
+            if (m_showPermissionColor)
+            {
+                colorPermissionsButton.Image = global::PipeViewer.Properties.Resources.permission_disable;
+                m_showPermissionColor = false;
+                removeHighlightedPermissions();
+            }
+            else
+            {
+                colorPermissionsButton.Image = global::PipeViewer.Properties.Resources.permission;
+                m_showPermissionColor = true;
+                colorPermissions();
+            }
+        }
+
+        private void removeHighlightedPermissions()
+        {
+            var permissionColumnIndex = dataGridView1.Columns["ColumnPermissions"].Index;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[permissionColumnIndex].Style.BackColor != Color.Red)
+                {
+                    row.Cells[permissionColumnIndex].Style.BackColor = Color.White;
+                }
+            }
+        }
+
+
+        private void colorPermissions()
+        {
+            var permissionColumnIndex = dataGridView1.Columns["ColumnPermissions"].Index;
+            
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                CheckIfShouldBeColored(row, permissionColumnIndex);
+            }
+            
+        }
+
+        private void CheckIfShouldBeColored(DataGridViewRow row, int permissionColumnIndex)
+        {
+            string[] splittedStrings = null;
+            if (row.Cells[permissionColumnIndex].Style.BackColor != Color.Red && row.Cells[permissionColumnIndex].Value != null)
+            {
+                splittedStrings = row.Cells[permissionColumnIndex].Value.ToString().Split('\n');
+            }
+            if (splittedStrings == null)
+            {
+                return;
+            }
+            foreach (String permission in splittedStrings)
+            {
+                foreach (String permissionKey in m_SidDict.Keys)
+                {
+                    if (permission.Contains(permissionKey))
+                    {
+                        if (permission.Contains("Allowed R"))
+                        {
+                            row.Cells[permissionColumnIndex].Style.BackColor = Color.Yellow;
+                        }
+                        if (permission.Contains("Allowed RW") || permission.Contains("Allowed Full")|| permission.Contains("Allowed W"))
+                        {
+                            row.Cells[permissionColumnIndex].Style.BackColor = Color.LightGreen;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
         private void copyCellToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string copiedCell = "";
