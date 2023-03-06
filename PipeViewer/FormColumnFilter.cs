@@ -94,7 +94,7 @@ namespace PipeViewer
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            if (!isRowExist(comboBoxSearchByColumn.Text, comboBoxRelation.Text, comboBoxValue.Text, comboBoxAction.Text))
+            if (!isRowExist(comboBoxSearchByColumn.Text, comboBoxRelation.Text, comboBoxValue.Text, comboBoxAction.Text) && comboBoxValue.Text != "") 
             {
                 ListViewItem item = new ListViewItem(comboBoxSearchByColumn.Text);
                 item.SubItems.Add(comboBoxRelation.Text);

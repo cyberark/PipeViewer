@@ -23,6 +23,7 @@ namespace PipeViewer
     {
 
         private int m_NamedPipesNumber;
+        private Tuple<String, String> m_RightClickContent;
         private ListView m_LastListViewColumnFilter = new ListView();
         private ListView m_LastListViewHighlighFilter = new ListView();
         private const int SW_SHOW = 5;
@@ -768,7 +769,7 @@ namespace PipeViewer
             }
             else if (rule.SubItems[(int)Utils.eFilterNames.Relation].Text == "is")
             {
-                if (cellValueFromGridViewCell.Value.ToString() == valueFromFilter)
+                if (cellValueFromGridViewCell.Value != null && cellValueFromGridViewCell.Value.ToString() == valueFromFilter)
                 {
                     return true;
                 }
@@ -913,14 +914,77 @@ namespace PipeViewer
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
+
                 m_CurrentRowIndexRightClick = e.RowIndex;
                 m_CurrentColumnIndexRightClick = e.ColumnIndex;
+                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    m_RightClickContent = new Tuple<string, string>(dataGridView1.Columns[e.ColumnIndex].Name.Remove(0, 6), dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    ToolStripItem[] items = createNewToolStripMenuItem(e.RowIndex, e.ColumnIndex);
+                }
                 contextMenuStripRightClickGridView.Show(Cursor.Position.X, Cursor.Position.Y);
             }
         }
+        private ToolStripItem[] createNewToolStripMenuItem(int rowIndex, int columnIndex)
+        {
+            string cellValue = dataGridView1.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+            ToolStripItem[] items = new ToolStripMenuItem[3];
+            ToolStripSeparator separator = new ToolStripSeparator();
+            contextMenuStripRightClickGridView.Items.Add(separator);
+            items[0] = new ToolStripMenuItem("Include " + cellValue);
+            items[1] = new ToolStripMenuItem("Exclude " + cellValue);
+            items[2] = new ToolStripMenuItem("Highlight " + cellValue);
+            items[0].Name = "Include";
+            items[1].Name = "Exclude";
+            items[2].Name = "Highlight";
+            items[0].Click += new EventHandler(includeFromStripMenu);
+            items[1].Click += new EventHandler(excludeFromStripMenu);
+            items[2].Click += new EventHandler(highlightFromStripMenu);
+            foreach (var item in items)
+            {
+                contextMenuStripRightClickGridView.Items.Add(item);
+            }
+            return items;
+        }
 
+        private void highlightFromStripMenu(object sender, EventArgs e)
+        {
+            addItemToFilterListView("Highlight");
+        }
+        private void excludeFromStripMenu(object sender, EventArgs e)
+        {
+            addItemToFilterListView("Exclude");
+        }
+        private void includeFromStripMenu(object sender, EventArgs e)
+        {
+            addItemToFilterListView("Include");
+        }
+
+        private void addItemToFilterListView(string option)
+        {
+            ListViewItem item = new ListViewItem(m_RightClickContent.Item1);
+            item.SubItems.Add("is");
+            item.SubItems.Add(m_RightClickContent.Item2);
+            item.Checked = true;
+
+            if (!option.Equals("Highlight"))
+            {
+                item.SubItems.Add(option);
+                m_LastListViewColumnFilter.Items.Add(item);
+                ColumnFilter_OKFilter(m_LastListViewColumnFilter);
+            }
+            else
+            {
+                item.SubItems.Add("Include");
+                m_LastListViewHighlighFilter.Items.Add(item);
+                HightlightWindow_hightlightRowsUpdate(m_LastListViewColumnFilter);
+            }
+
+            
+
+        }
         private void copyRowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string copiedRow = "";
@@ -1042,6 +1106,29 @@ namespace PipeViewer
                 }
             }
         }
+
+        private void includeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //ListViewItem item = new ListViewItem(m_RightClickCellContent);
+            //item.SubItems.Add("");
+            //item.SubItems.Add(comboBoxValue.Text);
+            //item.SubItems.Add(comboBoxAction.Text);
+            //item.Checked = true;
+            //this.listViewColumnFilters.Items.Add(item);
+        }
+
+        private void contextMenuStripRightClickGridView_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        {
+            if(contextMenuStripRightClickGridView.Items.Count < 3)
+            {
+                return;
+            }
+            for (int i = 0; i < 4; ++i) 
+            {
+                contextMenuStripRightClickGridView.Items.RemoveAt(2);
+            }
+        }
+
         private void copyCellToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string copiedCell = "";
