@@ -979,7 +979,7 @@ namespace PipeViewer
             {
                 item.SubItems.Add("Include");
                 m_LastListViewHighlighFilter.Items.Add(item);
-                HightlightWindow_hightlightRowsUpdate(m_LastListViewColumnFilter);
+                HightlightWindow_hightlightRowsUpdate(m_LastListViewHighlighFilter);
             }
 
             
