@@ -160,54 +160,10 @@ namespace PipeViewer
             foreach (var namedPipe in listOfPipes)
             {
                 addNamedPipeToDataGridView(namedPipe);
-                highlightPermittedPipes(namedPipe, numOfPipe);
-                numOfPipe++;
-
             }
         }
 
-        private void highlightPermittedPipes(string namdePipe, int numOfPipe)
-        {
-
-            Color color = Color.White;
-            try
-            {
-                PipeSecurity pipeSecurity = new PipeSecurity();
-                pipeSecurity.AddAccessRule(new PipeAccessRule("Everyone", PipeAccessRights.ReadWrite, AccessControlType.Allow));
-
-                using (NamedPipeServerStream server = new NamedPipeServerStream(namdePipe, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.None, 0, 0, pipeSecurity))
-                {
-                    Console.WriteLine("Access control entries:");
-                    foreach (PipeAccessRule rule in pipeSecurity.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount)))
-                    {
-                        Console.WriteLine("User/Group: {0}", rule.IdentityReference);
-                        Console.WriteLine("Access: {0}", rule.AccessControlType);
-                        Console.WriteLine("Rights: {0}", rule.PipeAccessRights);
-                        Console.WriteLine();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: {0}", ex.Message);
-            }
-            WindowsIdentity currentUser = WindowsIdentity.GetCurrent();
-            List<string> groups = new List<string>();
-
-            foreach (IdentityReference group in currentUser.Groups)
-            {
-                try
-                {
-                    SecurityIdentifier sid = group.Translate(typeof(SecurityIdentifier)) as SecurityIdentifier;
-                    NTAccount account = (NTAccount)sid.Translate(typeof(NTAccount));
-                    groups.Add(account.Value);
-
-                }
-                catch { }
-            }
-
-            dataGridView1.Rows[numOfPipe].DefaultCellStyle.BackColor = color;
-        }
+       
 
         //private delegate void initializePipeListCallBack();
         //private void initializePipeList()
