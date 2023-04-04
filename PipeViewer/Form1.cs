@@ -29,6 +29,7 @@ namespace PipeViewer
         private const int SW_SHOW = 5;
         private const uint SEE_MASK_INVOKEIDLIST = 12;
         private string m_LastSearchValue;
+        private string m_PipeToChatWith;
         private bool m_IsGridButtonPressed = false;
         private static Dictionary<string, int> m_ColumnIndexes = new Dictionary<string, int>();
         private static Dictionary<int, string> m_ProcessPIDsDictionary = new Dictionary<int, string>();
@@ -155,7 +156,6 @@ namespace PipeViewer
 
         private void initializePipeList()
         {
-            int numOfPipe = 0;
             String[] listOfPipes = System.IO.Directory.GetFiles(@"\\.\pipe\");
             foreach (var namedPipe in listOfPipes)
             {
@@ -479,6 +479,12 @@ namespace PipeViewer
             findWindow.ShowDialog();
         }
 
+        private void openPipeChat(string pipeName)
+        {
+            PipeChat pipeChat = new PipeChat(pipeName);
+            pipeChat.ShowDialog();
+        }
+
         private void FindWindow_searchForMatch(string i_SearchString, bool i_SearchDown, bool i_MatchWholeWord, bool i_MatchSensitive)
         {
             int startIndex = 0;
@@ -520,6 +526,7 @@ namespace PipeViewer
                         dataGridView1.Rows[i].Selected = true;
                         foundMatch = true;
                         dataGridView1.CurrentCell = dataGridView1.Rows[i].Cells[0];
+                        dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.SelectedRows[0].Index;
                         break;
                     }
                 }
@@ -886,24 +893,42 @@ namespace PipeViewer
         private ToolStripItem[] createNewToolStripMenuItem(int rowIndex, int columnIndex)
         {
             string cellValue = dataGridView1.Rows[rowIndex].Cells[columnIndex].Value.ToString();
-            ToolStripItem[] items = new ToolStripMenuItem[3];
+            ToolStripItem[] toolStripMenuItems = new ToolStripMenuItem[4];
+            
             ToolStripSeparator separator = new ToolStripSeparator();
             contextMenuStripRightClickGridView.Items.Add(separator);
-            items[0] = new ToolStripMenuItem("Include " + cellValue);
-            items[1] = new ToolStripMenuItem("Exclude " + cellValue);
-            items[2] = new ToolStripMenuItem("Highlight " + cellValue);
-            items[0].Name = "Include";
-            items[1].Name = "Exclude";
-            items[2].Name = "Highlight";
-            items[0].Click += new EventHandler(includeFromStripMenu);
-            items[1].Click += new EventHandler(excludeFromStripMenu);
-            items[2].Click += new EventHandler(highlightFromStripMenu);
-            foreach (var item in items)
+            toolStripMenuItems[0] = new ToolStripMenuItem("Include " + cellValue);
+            toolStripMenuItems[1] = new ToolStripMenuItem("Exclude " + cellValue);
+            toolStripMenuItems[2] = new ToolStripMenuItem("Highlight " + cellValue);
+            toolStripMenuItems[0].Name = "Include";
+            toolStripMenuItems[1].Name = "Exclude";
+            toolStripMenuItems[2].Name = "Highlight";
+            toolStripMenuItems[0].Click += new EventHandler(includeFromStripMenu);
+            toolStripMenuItems[1].Click += new EventHandler(excludeFromStripMenu);
+            toolStripMenuItems[2].Click += new EventHandler(highlightFromStripMenu);
+            if (dataGridView1.Columns[columnIndex].HeaderText == "Name")
             {
-                contextMenuStripRightClickGridView.Items.Add(item);
+                ToolStripSeparator secondSeparator = new ToolStripSeparator();
+                contextMenuStripRightClickGridView.Items.Add(secondSeparator);
+                toolStripMenuItems[3] = new ToolStripMenuItem("Chat with " + cellValue);
+                toolStripMenuItems[3].Click += new EventHandler(chatWithPipeFromStripMenu);
+                m_PipeToChatWith = cellValue;
             }
-            return items;
+            foreach (var item in toolStripMenuItems)
+            {
+                if (item != null)
+                {
+                    contextMenuStripRightClickGridView.Items.Add(item);
+                }
+            }
+            return toolStripMenuItems;
         }
+
+        private void chatWithPipeFromStripMenu(object sender, EventArgs e)
+        {
+            openPipeChat(m_PipeToChatWith);
+        }
+
 
         private void highlightFromStripMenu(object sender, EventArgs e)
         {
@@ -998,12 +1023,14 @@ namespace PipeViewer
             {
                 colorPermissionsButton.Image = global::PipeViewer.Properties.Resources.permission_disable;
                 m_showPermissionColor = false;
+                colorPermissionsButton.Text = "Show permissions color";
                 removeHighlightedPermissions();
             }
             else
             {
                 colorPermissionsButton.Image = global::PipeViewer.Properties.Resources.permission;
                 m_showPermissionColor = true;
+                colorPermissionsButton.Text = "Hide permissions color";
                 colorPermissions();
             }
         }
@@ -1075,11 +1102,8 @@ namespace PipeViewer
 
         private void contextMenuStripRightClickGridView_Closing(object sender, ToolStripDropDownClosingEventArgs e)
         {
-            if(contextMenuStripRightClickGridView.Items.Count < 3)
-            {
-                return;
-            }
-            for (int i = 0; i < 4; ++i) 
+            int numberOfItemsInContextMenuStripRightClickGridView = contextMenuStripRightClickGridView.Items.Count;
+            for (int i = 2; i < numberOfItemsInContextMenuStripRightClickGridView; ++i) 
             {
                 contextMenuStripRightClickGridView.Items.RemoveAt(2);
             }

@@ -406,6 +406,7 @@
             this.colorPermissionsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.colorPermissionsButton.Name = "colorPermissionsButton";
             this.colorPermissionsButton.Size = new System.Drawing.Size(23, 22);
+            this.colorPermissionsButton.Text = "Hide permissions color";
             this.colorPermissionsButton.Click += new System.EventHandler(this.showPermissionsByColorButton);
             // 
             // hScrollBar1
@@ -423,20 +424,20 @@
             this.copyRowToolStripMenuItem,
             this.copyCellToolStripMenuItem});
             this.contextMenuStripRightClickGridView.Name = "contextMenuStripRightClickGridView";
-            this.contextMenuStripRightClickGridView.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStripRightClickGridView.Size = new System.Drawing.Size(129, 48);
             this.contextMenuStripRightClickGridView.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.contextMenuStripRightClickGridView_Closing);
             // 
             // copyRowToolStripMenuItem
             // 
             this.copyRowToolStripMenuItem.Name = "copyRowToolStripMenuItem";
-            this.copyRowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyRowToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.copyRowToolStripMenuItem.Text = "Copy Row";
             this.copyRowToolStripMenuItem.Click += new System.EventHandler(this.copyRowToolStripMenuItem_Click);
             // 
             // copyCellToolStripMenuItem
             // 
             this.copyCellToolStripMenuItem.Name = "copyCellToolStripMenuItem";
-            this.copyCellToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyCellToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.copyCellToolStripMenuItem.Text = "Copy Cell";
             this.copyCellToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
             // 
