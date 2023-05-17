@@ -41,7 +41,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(346, 179);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Author: Eviatar Gerzi (@g3rzi)\r\n\r\nContributers: Natan Tunik\r\n\r\nVersion: 1.0\r\n\r\n\r\n" +
+            this.textBox1.Text = "Author: Eviatar Gerzi (@g3rzi)\r\n\r\nContributers: Natan Tunik\r\n\r\nVersion: 1.1\r\n\r\n\r\n" +
     "\r\nCopyright (c) 2023 CyberArk Software Ltd. All rights reserved\r\n\r\n";
             // 
             // linkLabel1
