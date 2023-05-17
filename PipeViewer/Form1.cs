@@ -481,7 +481,7 @@ namespace PipeViewer
 
         private void openPipeChat(string pipeName)
         {
-            PipeChat pipeChat = new PipeChat(pipeName);
+            pipeChatForm pipeChat = new pipeChatForm(pipeName);
             pipeChat.ShowDialog();
         }
 
@@ -882,7 +882,7 @@ namespace PipeViewer
 
                 m_CurrentRowIndexRightClick = e.RowIndex;
                 m_CurrentColumnIndexRightClick = e.ColumnIndex;
-                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                if (e.RowIndex >=0 && e.ColumnIndex >=0 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
                     m_RightClickContent = new Tuple<string, string>(dataGridView1.Columns[e.ColumnIndex].Name.Remove(0, 6), dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                     ToolStripItem[] items = createNewToolStripMenuItem(e.RowIndex, e.ColumnIndex);
