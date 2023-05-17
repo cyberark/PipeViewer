@@ -6,7 +6,7 @@ NtApiDotNet (https://github.com/googleprojectzero/sandbox-attacksurface-analysis
 (c) Google LLC. 2015 - 2021
 Developed by James Forshaw
 
-Be.HexEditor (https://github.com/Pkcs11Admin/Be.HexEditor) : MIT License
+Be.HexEditor (https://github.com/Pkcs11Admin/Be.HexEditor and https://sourceforge.net/projects/hexbox/) : MIT License
 Copyright (c) 2011 Bernhard Elbl
 Developed by Jaroslav Imrich and Bernhard Elbl
 
