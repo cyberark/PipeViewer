@@ -11,6 +11,11 @@ using NtApiDotNet;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Diagnostics;
+using System.IO.Pipes;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using System.DirectoryServices.AccountManagement;
+
 
 namespace PipeViewer
 {
@@ -18,11 +23,13 @@ namespace PipeViewer
     {
 
         private int m_NamedPipesNumber;
+        private Tuple<String, String> m_RightClickContent;
         private ListView m_LastListViewColumnFilter = new ListView();
         private ListView m_LastListViewHighlighFilter = new ListView();
         private const int SW_SHOW = 5;
         private const uint SEE_MASK_INVOKEIDLIST = 12;
         private string m_LastSearchValue;
+        private string m_PipeToChatWith;
         private bool m_IsGridButtonPressed = false;
         private static Dictionary<string, int> m_ColumnIndexes = new Dictionary<string, int>();
         private static Dictionary<int, string> m_ProcessPIDsDictionary = new Dictionary<int, string>();
@@ -31,7 +38,10 @@ namespace PipeViewer
         private IDictionary<string, List<ListViewItem>> m_ExcludeFilterDict = new Dictionary<string, List<ListViewItem>>();
         private IDictionary<string, List<ListViewItem>> m_IncludeHighlightDict = new Dictionary<string, List<ListViewItem>>();
         private IDictionary<string, List<ListViewItem>> m_ExcludeHighlightDict = new Dictionary<string, List<ListViewItem>>();
-
+        private string m_CurrentUserSid;
+        private WindowsIdentity m_CurrentIdentity;
+        private bool m_showPermissionColor = true;
+        private IDictionary<string, string> m_SidDict = new Dictionary<string, string>();
         // https://stackoverflow.com/questions/1936682/how-do-i-display-a-files-properties-dialog-from-c
         // https://stackoverflow.com/a/32503655/2153777
         // https://stackoverflow.com/a/28297300/2153777
@@ -80,7 +90,8 @@ namespace PipeViewer
         {
             InitializeComponent();
             InitalizeColumnsHeaderDictionary();
-
+            m_CurrentIdentity = WindowsIdentity.GetCurrent();
+            m_CurrentUserSid = m_CurrentIdentity.User.ToString();
             typeof(DataGridView).InvokeMember(
                "DoubleBuffered",
                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
@@ -88,7 +99,7 @@ namespace PipeViewer
                dataGridView1,
                new object[] { true });
 
-           //Task.Run(() => Utils.CreateDummyPipeForTesting());
+            //Task.Run(() => Utils.CreateDummyPipeForTesting());
 
             //dummRowsForDebug();
             //dummyLoopRowsForDebug();
@@ -150,8 +161,9 @@ namespace PipeViewer
             {
                 addNamedPipeToDataGridView(namedPipe);
             }
-
         }
+
+       
 
         //private delegate void initializePipeListCallBack();
         //private void initializePipeList()
@@ -173,7 +185,7 @@ namespace PipeViewer
         // https://blog.cjwdev.co.uk/2011/06/28/permissions-not-included-in-net-accessrule-filesystemrights-enum/
         private void addNamedPipeToDataGridView(string i_NamedPipe)
         {
-           // i_NamedPipe = @"\\.\pipe\myPipe";
+            // i_NamedPipe = @"\\.\pipe\myPipe";
             string permissions;
             if (this.InvokeRequired)
             {
@@ -201,19 +213,46 @@ namespace PipeViewer
                 // We added try\catch because one specific bug with \\.\pipe\dbxsvc (DropBox). Maybe there is a better way to handle it?
                 try
                 {
+
                     if (namedPipeObject != null)
                     {
                         row.Cells[m_ColumnIndexes[ColumnSddl.HeaderText]].Value = namedPipeObject.Sddl;
 
-
+                        Color cellColor = Color.White;
                         if (namedPipeObject.SecurityDescriptor.Dacl.Count != 0)
                         {
                             permissions = "";
 
                             foreach (Ace dacl in namedPipeObject.SecurityDescriptor.Dacl)
                             {
-                                permissions += dacl.Type.ToString() + " ";
-                                permissions += Engine.ConvertAccessMaskToSimplePermissions(dacl.Mask.Access);
+                                string permissionReadOrWrite = Engine.ConvertAccessMaskToSimplePermissions(dacl.Mask.Access);
+                                string allowedOrNotAllowed = dacl.Type.ToString();
+
+                                // TODO: why adding to a new group doesn't show the new group
+                                foreach (IdentityReference group in m_CurrentIdentity.Groups)
+                                {
+                                    SecurityIdentifier sid = (SecurityIdentifier)group.Translate(typeof(SecurityIdentifier));
+                                    if ((m_CurrentUserSid.Equals(dacl.Sid.ToString()) || sid.Value.Equals(dacl.Sid.ToString())) && allowedOrNotAllowed.Contains("Allowed"))
+                                    {
+                                        if (!m_SidDict.ContainsKey(dacl.Sid.Name))
+                                        {
+                                            m_SidDict.Add(dacl.Sid.Name, dacl.Sid.ToString());
+                                        }
+                                        if (permissionReadOrWrite.Contains("R"))
+                                        {
+                                            cellColor = Color.Yellow;
+                                        }
+                                        if (permissionReadOrWrite.Contains("W") || permissionReadOrWrite.Contains("Full") || permissionReadOrWrite.Contains("RW"))
+                                        {
+                                            cellColor = Color.LightGreen;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                row.Cells[m_ColumnIndexes[ColumnPermissions.HeaderText]].Style.BackColor = cellColor;
+                                permissions += allowedOrNotAllowed + " ";
+                                permissions += permissionReadOrWrite;
                                 permissions += " " + dacl.Sid.Name + "; \n";
                             }
 
@@ -268,7 +307,7 @@ namespace PipeViewer
                 {
                     if (m_ProcessPIDsDictionary.TryGetValue(pid, out string processName))
                     {
-                        return processName + " ("+ pid.ToString() + ")";
+                        return processName + " (" + pid.ToString() + ")";
                     }
                     else
                     {
@@ -287,7 +326,7 @@ namespace PipeViewer
                         }
                     }
                 });
-            
+
             return string.Join("; ", processNames.Select(nameAndPid => nameAndPid));
         }
 
@@ -440,6 +479,12 @@ namespace PipeViewer
             findWindow.ShowDialog();
         }
 
+        private void openPipeChat(string pipeName)
+        {
+            pipeChatForm pipeChat = new pipeChatForm(pipeName);
+            pipeChat.ShowDialog();
+        }
+
         private void FindWindow_searchForMatch(string i_SearchString, bool i_SearchDown, bool i_MatchWholeWord, bool i_MatchSensitive)
         {
             int startIndex = 0;
@@ -481,6 +526,7 @@ namespace PipeViewer
                         dataGridView1.Rows[i].Selected = true;
                         foundMatch = true;
                         dataGridView1.CurrentCell = dataGridView1.Rows[i].Cells[0];
+                        dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.SelectedRows[0].Index;
                         break;
                     }
                 }
@@ -686,7 +732,7 @@ namespace PipeViewer
             }
             else if (rule.SubItems[(int)Utils.eFilterNames.Relation].Text == "is")
             {
-                if (cellValueFromGridViewCell.Value.ToString() == valueFromFilter)
+                if (cellValueFromGridViewCell.Value != null && cellValueFromGridViewCell.Value.ToString() == valueFromFilter)
                 {
                     return true;
                 }
@@ -831,14 +877,95 @@ namespace PipeViewer
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
+
                 m_CurrentRowIndexRightClick = e.RowIndex;
                 m_CurrentColumnIndexRightClick = e.ColumnIndex;
+                if (e.RowIndex >=0 && e.ColumnIndex >=0 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    m_RightClickContent = new Tuple<string, string>(dataGridView1.Columns[e.ColumnIndex].Name.Remove(0, 6), dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    ToolStripItem[] items = createNewToolStripMenuItem(e.RowIndex, e.ColumnIndex);
+                }
                 contextMenuStripRightClickGridView.Show(Cursor.Position.X, Cursor.Position.Y);
             }
         }
+        private ToolStripItem[] createNewToolStripMenuItem(int rowIndex, int columnIndex)
+        {
+            string cellValue = dataGridView1.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+            ToolStripItem[] toolStripMenuItems = new ToolStripMenuItem[4];
+            
+            ToolStripSeparator separator = new ToolStripSeparator();
+            contextMenuStripRightClickGridView.Items.Add(separator);
+            toolStripMenuItems[0] = new ToolStripMenuItem("Include " + cellValue);
+            toolStripMenuItems[1] = new ToolStripMenuItem("Exclude " + cellValue);
+            toolStripMenuItems[2] = new ToolStripMenuItem("Highlight " + cellValue);
+            toolStripMenuItems[0].Name = "Include";
+            toolStripMenuItems[1].Name = "Exclude";
+            toolStripMenuItems[2].Name = "Highlight";
+            toolStripMenuItems[0].Click += new EventHandler(includeFromStripMenu);
+            toolStripMenuItems[1].Click += new EventHandler(excludeFromStripMenu);
+            toolStripMenuItems[2].Click += new EventHandler(highlightFromStripMenu);
+            if (dataGridView1.Columns[columnIndex].HeaderText == "Name")
+            {
+                ToolStripSeparator secondSeparator = new ToolStripSeparator();
+                contextMenuStripRightClickGridView.Items.Add(secondSeparator);
+                toolStripMenuItems[3] = new ToolStripMenuItem("Chat with " + cellValue);
+                toolStripMenuItems[3].Click += new EventHandler(chatWithPipeFromStripMenu);
+                m_PipeToChatWith = cellValue;
+            }
+            foreach (var item in toolStripMenuItems)
+            {
+                if (item != null)
+                {
+                    contextMenuStripRightClickGridView.Items.Add(item);
+                }
+            }
+            return toolStripMenuItems;
+        }
 
+        private void chatWithPipeFromStripMenu(object sender, EventArgs e)
+        {
+            openPipeChat(m_PipeToChatWith);
+        }
+
+
+        private void highlightFromStripMenu(object sender, EventArgs e)
+        {
+            addItemToFilterListView("Highlight");
+        }
+        private void excludeFromStripMenu(object sender, EventArgs e)
+        {
+            addItemToFilterListView("Exclude");
+        }
+        private void includeFromStripMenu(object sender, EventArgs e)
+        {
+            addItemToFilterListView("Include");
+        }
+
+        private void addItemToFilterListView(string option)
+        {
+            ListViewItem item = new ListViewItem(m_RightClickContent.Item1);
+            item.SubItems.Add("is");
+            item.SubItems.Add(m_RightClickContent.Item2);
+            item.Checked = true;
+
+            if (!option.Equals("Highlight"))
+            {
+                item.SubItems.Add(option);
+                m_LastListViewColumnFilter.Items.Add(item);
+                ColumnFilter_OKFilter(m_LastListViewColumnFilter);
+            }
+            else
+            {
+                item.SubItems.Add("Include");
+                m_LastListViewHighlighFilter.Items.Add(item);
+                HightlightWindow_hightlightRowsUpdate(m_LastListViewHighlighFilter);
+            }
+
+            
+
+        }
         private void copyRowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string copiedRow = "";
@@ -888,6 +1015,98 @@ namespace PipeViewer
             DataObject dataObject = tempDataGridView.GetClipboardContent();
             // Get the text of the DataObject, and serialize it to a file
             File.WriteAllText(filename, dataObject.GetText(TextDataFormat.CommaSeparatedValue).Replace("\n", ""));
+        }
+
+        private void showPermissionsByColorButton(object sender, EventArgs e)
+        {
+            if (m_showPermissionColor)
+            {
+                colorPermissionsButton.Image = global::PipeViewer.Properties.Resources.permission_disable;
+                m_showPermissionColor = false;
+                colorPermissionsButton.Text = "Show permissions color";
+                removeHighlightedPermissions();
+            }
+            else
+            {
+                colorPermissionsButton.Image = global::PipeViewer.Properties.Resources.permission;
+                m_showPermissionColor = true;
+                colorPermissionsButton.Text = "Hide permissions color";
+                colorPermissions();
+            }
+        }
+
+        private void removeHighlightedPermissions()
+        {
+            var permissionColumnIndex = dataGridView1.Columns["ColumnPermissions"].Index;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[permissionColumnIndex].Style.BackColor != Color.Red)
+                {
+                    row.Cells[permissionColumnIndex].Style.BackColor = Color.White;
+                }
+            }
+        }
+
+
+        private void colorPermissions()
+        {
+            var permissionColumnIndex = dataGridView1.Columns["ColumnPermissions"].Index;
+            
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                CheckIfShouldBeColored(row, permissionColumnIndex);
+            }
+            
+        }
+
+        private void CheckIfShouldBeColored(DataGridViewRow row, int permissionColumnIndex)
+        {
+            string[] splittedStrings = null;
+            if (row.Cells[permissionColumnIndex].Style.BackColor != Color.Red && row.Cells[permissionColumnIndex].Value != null)
+            {
+                splittedStrings = row.Cells[permissionColumnIndex].Value.ToString().Split('\n');
+            }
+            if (splittedStrings == null)
+            {
+                return;
+            }
+            foreach (String permission in splittedStrings)
+            {
+                foreach (String permissionKey in m_SidDict.Keys)
+                {
+                    if (permission.Contains(permissionKey))
+                    {
+                        if (permission.Contains("Allowed R"))
+                        {
+                            row.Cells[permissionColumnIndex].Style.BackColor = Color.Yellow;
+                        }
+                        if (permission.Contains("Allowed RW") || permission.Contains("Allowed Full")|| permission.Contains("Allowed W"))
+                        {
+                            row.Cells[permissionColumnIndex].Style.BackColor = Color.LightGreen;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void includeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //ListViewItem item = new ListViewItem(m_RightClickCellContent);
+            //item.SubItems.Add("");
+            //item.SubItems.Add(comboBoxValue.Text);
+            //item.SubItems.Add(comboBoxAction.Text);
+            //item.Checked = true;
+            //this.listViewColumnFilters.Items.Add(item);
+        }
+
+        private void contextMenuStripRightClickGridView_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        {
+            int numberOfItemsInContextMenuStripRightClickGridView = contextMenuStripRightClickGridView.Items.Count;
+            for (int i = 2; i < numberOfItemsInContextMenuStripRightClickGridView; ++i) 
+            {
+                contextMenuStripRightClickGridView.Items.RemoveAt(2);
+            }
         }
 
         private void copyCellToolStripMenuItem_Click(object sender, EventArgs e)
