@@ -573,6 +573,11 @@ namespace PipeViewer
 
         private void findButton_Click(object sender, EventArgs e)
         {
+            openSearchForm();
+        }
+
+        private void openSearchForm()
+        {
             FormSearch findWindow = new FormSearch();
             findWindow.searchForMatch += new FormSearch.searchEventHandler(FindWindow_searchForMatch);
             findWindow.Show();
@@ -643,6 +648,25 @@ namespace PipeViewer
             {
                 dataGridView1.SelectedCells[i].Selected = false;
             }
+        }
+
+        private void PipeChatForm_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            bool result = false;
+
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                openSearchForm();
+                result = true;
+            }
+
+            return result;
+            
         }
     }
 }

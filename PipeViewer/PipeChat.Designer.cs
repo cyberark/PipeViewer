@@ -50,6 +50,7 @@ namespace PipeViewer
             this.exportToCsvButton = new System.Windows.Forms.ToolStripButton();
             this.rawExportToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.importStripButton = new System.Windows.Forms.ToolStripButton();
+            this.findButton = new System.Windows.Forms.ToolStripButton();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +62,6 @@ namespace PipeViewer
             this.chatHexBox = new Be.Windows.Forms.HexBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.sendButton = new System.Windows.Forms.Button();
-            this.findButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -238,6 +238,16 @@ namespace PipeViewer
             this.importStripButton.Text = "Import from file";
             this.importStripButton.Click += new System.EventHandler(this.importStripButton_Click);
             // 
+            // findButton
+            // 
+            this.findButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.findButton.Image = global::PipeViewer.Properties.Resources.find;
+            this.findButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findButton.Name = "findButton";
+            this.findButton.Size = new System.Drawing.Size(24, 24);
+            this.findButton.Text = "Search";
+            this.findButton.Click += new System.EventHandler(this.findButton_Click);
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -353,16 +363,6 @@ namespace PipeViewer
             this.sendButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.sendButton.UseVisualStyleBackColor = false;
             this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
-            // 
-            // findButton
-            // 
-            this.findButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.findButton.Image = global::PipeViewer.Properties.Resources.find;
-            this.findButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.findButton.Name = "findButton";
-            this.findButton.Size = new System.Drawing.Size(24, 24);
-            this.findButton.Text = "Search";
-            this.findButton.Click += new System.EventHandler(this.findButton_Click);
             // 
             // PipeChatForm
             // 
