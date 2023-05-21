@@ -650,11 +650,6 @@ namespace PipeViewer
             }
         }
 
-        private void PipeChatForm_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             bool result = false;
