@@ -16,7 +16,7 @@ using Be.Windows.Forms;
 
 namespace PipeViewer
 {
-    public partial class pipeChatForm : Form
+    public partial class PipeChatForm : Form
     {
         private delegate void startClientDelgation();
         private string m_PipeName;
@@ -24,11 +24,12 @@ namespace PipeViewer
         private List<byte> m_ByteList = new List<byte>();
         private bool m_Closed = false;
 
-        public pipeChatForm(string i_PipeName)
+        public PipeChatForm(string i_PipeName)
         {            
             InitializeComponent();
             this.Text += " - Chating with " + i_PipeName;
             m_PipeName = i_PipeName.Replace(@"\\.\pipe\", "");
+           // m_PipeName = "Foo";
             dataGridView1.Columns["ColumnText"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dataGridView1.Columns["ColumnBinary"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             chatHexBox.ByteProvider = new DynamicByteProvider(m_ByteList);
@@ -149,6 +150,7 @@ namespace PipeViewer
             dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell { Value = i_BinaryText, Style = { Font = new Font("Courier New", 12) } });
             dataGridViewRow.DefaultCellStyle.BackColor = i_BackColor;
             dataGridView1.Rows.Add(dataGridViewRow);
+            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.FirstDisplayedScrollingRowIndex + 1;
         }
 
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -545,6 +547,27 @@ namespace PipeViewer
             if (m_Client.IsConnected)
             {
                 m_Client.Close();
+            }
+        }
+
+        private void importStripButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string filePath = openFileDialog.FileName;
+                    m_ByteList = File.ReadAllBytes(filePath).ToList();
+                    chatHexBox.ByteProvider = new DynamicByteProvider(m_ByteList);
+                    //Display the binary tab.
+                    tabControl1.SelectedIndex = 1;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }
