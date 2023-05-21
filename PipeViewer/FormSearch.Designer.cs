@@ -33,8 +33,8 @@
             this.buttonFind = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.groupBoxDirection = new System.Windows.Forms.GroupBox();
-            this.radioButtonUp = new System.Windows.Forms.RadioButton();
             this.radioButtonDown = new System.Windows.Forms.RadioButton();
+            this.radioButtonUp = new System.Windows.Forms.RadioButton();
             this.groupBoxDirection.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +54,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(215, 21);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox1_KeyPress);
             // 
             // buttonFind
             // 
@@ -86,16 +87,6 @@
             this.groupBoxDirection.TabStop = false;
             this.groupBoxDirection.Text = "Direction";
             // 
-            // radioButtonUp
-            // 
-            this.radioButtonUp.AutoSize = true;
-            this.radioButtonUp.Location = new System.Drawing.Point(7, 29);
-            this.radioButtonUp.Name = "radioButtonUp";
-            this.radioButtonUp.Size = new System.Drawing.Size(39, 17);
-            this.radioButtonUp.TabIndex = 0;
-            this.radioButtonUp.Text = "Up";
-            this.radioButtonUp.UseVisualStyleBackColor = true;
-            // 
             // radioButtonDown
             // 
             this.radioButtonDown.AutoSize = true;
@@ -107,6 +98,16 @@
             this.radioButtonDown.TabStop = true;
             this.radioButtonDown.Text = "Down";
             this.radioButtonDown.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonUp
+            // 
+            this.radioButtonUp.AutoSize = true;
+            this.radioButtonUp.Location = new System.Drawing.Point(7, 29);
+            this.radioButtonUp.Name = "radioButtonUp";
+            this.radioButtonUp.Size = new System.Drawing.Size(39, 17);
+            this.radioButtonUp.TabIndex = 0;
+            this.radioButtonUp.Text = "Up";
+            this.radioButtonUp.UseVisualStyleBackColor = true;
             // 
             // FormSearch
             // 
@@ -127,6 +128,7 @@
             this.groupBoxDirection.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

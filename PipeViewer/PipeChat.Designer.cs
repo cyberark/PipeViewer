@@ -61,6 +61,7 @@ namespace PipeViewer
             this.chatHexBox = new Be.Windows.Forms.HexBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.sendButton = new System.Windows.Forms.Button();
+            this.findButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -189,7 +190,8 @@ namespace PipeViewer
             this.refresToolStripButton,
             this.exportToCsvButton,
             this.rawExportToolStripButton,
-            this.importStripButton});
+            this.importStripButton,
+            this.findButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(926, 27);
@@ -352,6 +354,16 @@ namespace PipeViewer
             this.sendButton.UseVisualStyleBackColor = false;
             this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
             // 
+            // findButton
+            // 
+            this.findButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.findButton.Image = global::PipeViewer.Properties.Resources.find;
+            this.findButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findButton.Name = "findButton";
+            this.findButton.Size = new System.Drawing.Size(24, 24);
+            this.findButton.Text = "Search";
+            this.findButton.Click += new System.EventHandler(this.findButton_Click);
+            // 
             // PipeChatForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -406,5 +418,6 @@ namespace PipeViewer
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnBinary;
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.ToolStripButton importStripButton;
+        private System.Windows.Forms.ToolStripButton findButton;
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -23,6 +21,7 @@ namespace PipeViewer
         private NamedPipeClientStream m_Client;
         private List<byte> m_ByteList = new List<byte>();
         private bool m_Closed = false;
+        private string m_LastSearchValue = string.Empty;
 
         public PipeChatForm(string i_PipeName)
         {            
@@ -150,6 +149,7 @@ namespace PipeViewer
             dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell { Value = i_BinaryText, Style = { Font = new Font("Courier New", 12) } });
             dataGridViewRow.DefaultCellStyle.BackColor = i_BackColor;
             dataGridView1.Rows.Add(dataGridViewRow);
+            //Show the last row
             dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.FirstDisplayedScrollingRowIndex + 1;
         }
 
@@ -568,6 +568,80 @@ namespace PipeViewer
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        private void findButton_Click(object sender, EventArgs e)
+        {
+            FormSearch findWindow = new FormSearch();
+            findWindow.searchForMatch += new FormSearch.searchEventHandler(FindWindow_searchForMatch);
+            findWindow.Show();
+        }
+
+        private void FindWindow_searchForMatch(string i_SearchString, bool i_SearchDown, bool i_MatchWholeWord, bool i_MatchSensitive)
+        {
+            int startIndex = 0;
+            m_LastSearchValue = i_SearchString;
+            bool foundMatch = false;
+            int step = 1;
+            if (!i_SearchDown)
+            {
+                step = -1;
+            }
+
+            if (dataGridView1.SelectedRows != null && dataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                startIndex = selectedRow.Index;
+            }
+
+            if (dataGridView1.SelectedCells != null && dataGridView1.SelectedCells.Count > 0)
+            {
+                DataGridViewCell selectedCell = dataGridView1.SelectedCells[0];
+                startIndex = selectedCell.RowIndex;
+            }
+
+            startIndex += step;
+            for (int i = startIndex; i < dataGridView1.Rows.Count; i += step)
+            {
+
+                if (i < 0)
+                {
+                    break;
+                }
+
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    // TODO: Add support in Case Sensitive, replicate to RPCMon.
+                    if (dataGridView1.Rows[i].Visible && cell.Value != null && cell.Value.ToString().ToLower().Contains(i_SearchString.ToLower()))
+                    {
+                        cleanAllSelectedCells();
+                        dataGridView1.Rows[i].Selected = true;
+                        foundMatch = true;
+                        dataGridView1.CurrentCell = dataGridView1.Rows[i].Cells[0];
+                        dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.SelectedRows[0].Index;
+                        break;
+                    }
+                }
+
+                if (foundMatch)
+                {
+                    break;
+                }
+
+            }
+
+            if (!foundMatch)
+            {
+                MessageBox.Show(string.Format("Cannot find string \"{0}\"", i_SearchString), "PipeViewer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void cleanAllSelectedCells()
+        {
+            for (int i = 0; i < dataGridView1.SelectedCells.Count; i++)
+            {
+                dataGridView1.SelectedCells[i].Selected = false;
             }
         }
     }
