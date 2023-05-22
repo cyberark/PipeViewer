@@ -481,7 +481,7 @@ namespace PipeViewer
 
         private void openPipeChat(string pipeName)
         {
-            pipeChatForm pipeChat = new pipeChatForm(pipeName);
+            PipeChatForm pipeChat = new PipeChatForm(pipeName);
             pipeChat.ShowDialog();
         }
 
