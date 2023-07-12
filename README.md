@@ -21,7 +21,7 @@ Double click the EXE binary and you will get the list of all named pipes.
 We built the project and uploaded it so you can find it in the releases.  
 One problem is that the binary will trigger alerts from Windows Defender because it uses the NtObjerManager package which is flagged as virus.  
 Note that James Forshaw talked about it [here](https://youtu.be/At-SWQyp-DY?t=1652).  
-We can't change it because we are depend on third party DLL.  
+We can't change it because we depend on third party DLL.  
 
 ## Features
 * A detailed overview of named pipes.
@@ -30,7 +30,7 @@ We can't change it because we are depend on third party DLL.
 * Export\Import to\from JSON
 
 ## Upcoming Features
-* Mark the pipes the you can access
+* Mark the pipes that you can access
 * Executer - allows send\receive data to one or more named pipes
 * Properties window for each named pipe by right click
 
