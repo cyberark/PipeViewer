@@ -12,8 +12,6 @@ namespace PipeViewer.Control
             Client
         }
 
-
-
         public static NtNamedPipeFileBase GetNamedPipeObject(string i_NamedPipe, NamedPipeFunctionEndType e_EndType)
         {
             NtNamedPipeFileBase namedPipeFileObject = null;
