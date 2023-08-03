@@ -15,13 +15,21 @@ PipeViewer is a GUI tool that allows users to view details about Windows Named p
 
 ## Usage
 
-Double click the EXE binary and you will get the list of all named pipes.   
+Double-click the EXE binary and you will get the list of all named pipes.   
+
+## Build    
+We used Visual Studio to compile it.  
+When downloading it from GitHub you might get error of block files, you can use PowerShell to unblock them:  
+```powershell
+Get-ChildItem -Path 'D:\tmp\PipeViewer-main' -Recurse | Unblock-File
+```
+
 
 ## Warning  
 We built the project and uploaded it so you can find it in the releases.  
 One problem is that the binary will trigger alerts from Windows Defender because it uses the NtObjerManager package which is flagged as virus.  
 Note that James Forshaw talked about it [here](https://youtu.be/At-SWQyp-DY?t=1652).  
-We can't change it because we depend on third party DLL.  
+We can't change it because we depend on third-party DLL.  
 
 ## Features
 * A detailed overview of named pipes.
