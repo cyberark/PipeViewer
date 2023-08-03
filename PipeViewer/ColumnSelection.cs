@@ -73,10 +73,5 @@ namespace PipeViewer
             OnselectColumnsUpdate(groupBoxNamedPipe, groupBoxAccess, groupBoxSecurityDescriptor, groupBoxTimeStamp);
             this.Close();
         }
-
-        private void ColumnSelection_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
