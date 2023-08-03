@@ -10,7 +10,7 @@ try {
     Write-Host "got client"
 
     while ($true) {
-        Write-Host "writing message $count"
+        Write-Host "writing message #$count"
 
         # Read data from the client
         $readBuffer = New-Object byte[] 1024
@@ -23,12 +23,23 @@ try {
 
         # Write data to the client
         $responseBytes = [System.Text.Encoding]::ASCII.GetBytes($responseData)
+        try {
         $pipe.Write($responseBytes, 0, $responseBytes.Length)
         $pipe.Flush()
+        } catch [System.Exception] {
+           Write-Host "connection was lost"
+           $pipe.Dispose()
+           $pipe = New-Object System.IO.Pipes.NamedPipeServerStream($pipeName, [System.IO.Pipes.PipeDirection]::InOut, 1, [System.IO.Pipes.PipeTransmissionMode]::Message, [System.IO.Pipes.PipeOptions]::None)
+           Write-Host "waiting for client"
+           $pipe.WaitForConnection()
+           Write-Host "got client 2"
+        }
 
         $count++
         Start-Sleep -Seconds 2
     }
+} catch [system.ArgumentNullException], [system.InvalidOperationException], [system.InvalidOperationException], [system.ObjectDisposedException] {
+    Write-Host $_.ScriptStackTrace
 }
 finally {
     $pipe.Dispose()
