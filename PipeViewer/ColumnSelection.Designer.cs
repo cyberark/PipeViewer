@@ -466,7 +466,6 @@
             this.Name = "ColumnSelection";
             this.ShowIcon = false;
             this.Text = "PipeViewer Column Selection";
-            this.Load += new System.EventHandler(this.ColumnSelection_Load);
             this.groupBoxNamedPipe.ResumeLayout(false);
             this.groupBoxNamedPipe.PerformLayout();
             this.groupBoxTimeStamp.ResumeLayout(false);

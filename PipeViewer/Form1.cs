@@ -22,6 +22,9 @@ namespace PipeViewer
     public partial class Form1 : Form
     {
         private int m_NamedPipesNumber;
+        // *********************************************
+        private int m_SelectedRowsNumber;
+        // *********************************************
         private Tuple<String, String> m_RightClickContent;
         private ListView m_LastListViewColumnFilter = new ListView();
         private ListView m_LastListViewHighlighFilter = new ListView();
@@ -162,7 +165,40 @@ namespace PipeViewer
             }
         }
 
-       
+        // ******************************************************************************
+        int CountSelectedRows(DataGridView dataGridView)
+        {
+            int count = 0;
+            HashSet<int> RowsSet = new HashSet<int>();
+            // Loop through the selected cells and count them
+            foreach (DataGridViewCell cell in dataGridView.SelectedCells)
+            {
+                // Check if the cell is not a header cell
+                // And if the cell row index is not in the set
+                if (cell.RowIndex >= 0 && cell.ColumnIndex >= 0 && !RowsSet.Contains(cell.RowIndex))
+                {
+                    // Add the cell row number to the set
+                    RowsSet.Add(cell.RowIndex);
+                    count++;
+                }
+            }
+
+            return count;
+        }
+        // ******************************************************************************
+
+
+        // ******************************************************************************
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            // Call the CountSelectedCells function and update the count wherever you want to display it
+            int selectedrowCount = CountSelectedRows(dataGridView1);
+
+            // Do something with the selectedCellCount, for example, display it in a label
+            toolStripStatusLabelTotalSelectedRows.Text = "|  Total Selected Rows: " + selectedrowCount.ToString();
+        }
+        // ******************************************************************************
+
 
         //private delegate void initializePipeListCallBack();
         //private void initializePipeList()
@@ -378,6 +414,9 @@ namespace PipeViewer
             dataGridView1.Refresh();
             m_NamedPipesNumber = 0;
             toolStripStatusLabelTotalNamedPipes.Text = "Total Named Pipes: 0";
+            // *********************************************
+            toolStripStatusLabelTotalNamedPipes.Text = "Total Selected Rows: 0";
+            // *********************************************
         }
 
         private void toolStripButtonGrid_Click(object sender, EventArgs e)
@@ -482,7 +521,7 @@ namespace PipeViewer
         private void openPipeChat(string pipeName)
         {
             PipeChatForm pipeChat = new PipeChatForm(pipeName);
-            pipeChat.ShowDialog();
+            pipeChat.Show();
         }
 
         private void FindWindow_searchForMatch(string i_SearchString, bool i_SearchDown, bool i_MatchWholeWord, bool i_MatchSensitive)
@@ -1129,7 +1168,6 @@ namespace PipeViewer
             }
         }
 
-    
 
         private void copyCellToolStripMenuItem_Click(object sender, EventArgs e)
         {
