@@ -296,10 +296,10 @@ namespace PipeViewer
             // TextTab
             // 
             this.TextTab.Controls.Add(this.textBox);
-            this.TextTab.Location = new System.Drawing.Point(4, 25);
+            this.TextTab.Location = new System.Drawing.Point(4, 22);
             this.TextTab.Name = "TextTab";
             this.TextTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TextTab.Size = new System.Drawing.Size(918, 93);
+            this.TextTab.Size = new System.Drawing.Size(918, 96);
             this.TextTab.TabIndex = 0;
             this.TextTab.Text = "Text";
             this.TextTab.UseVisualStyleBackColor = true;
@@ -314,7 +314,7 @@ namespace PipeViewer
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
             this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox.Size = new System.Drawing.Size(912, 87);
+            this.textBox.Size = new System.Drawing.Size(912, 90);
             this.textBox.TabIndex = 2;
             this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
             this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
@@ -322,10 +322,10 @@ namespace PipeViewer
             // BinaryTab
             // 
             this.BinaryTab.Controls.Add(this.chatHexBox);
-            this.BinaryTab.Location = new System.Drawing.Point(4, 25);
+            this.BinaryTab.Location = new System.Drawing.Point(4, 22);
             this.BinaryTab.Name = "BinaryTab";
             this.BinaryTab.Padding = new System.Windows.Forms.Padding(3);
-            this.BinaryTab.Size = new System.Drawing.Size(918, 123);
+            this.BinaryTab.Size = new System.Drawing.Size(918, 96);
             this.BinaryTab.TabIndex = 1;
             this.BinaryTab.Text = "Binary";
             this.BinaryTab.UseVisualStyleBackColor = true;
@@ -339,7 +339,7 @@ namespace PipeViewer
             this.chatHexBox.Location = new System.Drawing.Point(3, 3);
             this.chatHexBox.Name = "chatHexBox";
             this.chatHexBox.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.chatHexBox.Size = new System.Drawing.Size(912, 117);
+            this.chatHexBox.Size = new System.Drawing.Size(912, 90);
             this.chatHexBox.StringViewVisible = true;
             this.chatHexBox.TabIndex = 0;
             this.chatHexBox.UseFixedBytesPerLine = true;

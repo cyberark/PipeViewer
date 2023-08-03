@@ -37,6 +37,7 @@ namespace PipeViewer
 
         private void startClient()
         {
+
             if (this.InvokeRequired)
             {
                 startClientDelgation s = new startClientDelgation(startClient);
