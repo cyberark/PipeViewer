@@ -1,4 +1,6 @@
-﻿namespace PipeViewer
+﻿using System.Windows.Forms;
+
+namespace PipeViewer
 {
     partial class Form1
     {
@@ -311,9 +313,9 @@
             // 
             // statusStrip1
             // 
+            ToolStripItem Separator = new ToolStripSeparator();
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelTotalNamedPipes,
-            this.toolStripStatusLabelTotalSelectedRows});
+            this.toolStripStatusLabelTotalNamedPipes, Separator, this.toolStripStatusLabelTotalSelectedRows});
             this.statusStrip1.Location = new System.Drawing.Point(0, 432);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(955, 22);
@@ -330,7 +332,7 @@
             // 
             this.toolStripStatusLabelTotalSelectedRows.Name = "toolStripStatusLabelTotalSelectedRows";
             this.toolStripStatusLabelTotalSelectedRows.Size = new System.Drawing.Size(97, 17);
-            this.toolStripStatusLabelTotalSelectedRows.Text = "|  Selected Rows: ";
+            this.toolStripStatusLabelTotalSelectedRows.Text = "Selected Rows: ";
             // 
             // toolStrip1
             // 
