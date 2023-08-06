@@ -1,4 +1,6 @@
-﻿namespace PipeViewer
+﻿using System.Windows.Forms;
+
+namespace PipeViewer
 {
     partial class Form1
     {
@@ -61,6 +63,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelTotalNamedPipes = new System.Windows.Forms.ToolStripStatusLabel();
+            this.Separator = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripStatusLabelTotalSelectedRows = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
@@ -313,24 +316,30 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelTotalNamedPipes,
+            this.Separator,
             this.toolStripStatusLabelTotalSelectedRows});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 432);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 431);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(955, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(955, 23);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabelTotalNamedPipes
             // 
             this.toolStripStatusLabelTotalNamedPipes.Name = "toolStripStatusLabelTotalNamedPipes";
-            this.toolStripStatusLabelTotalNamedPipes.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabelTotalNamedPipes.Size = new System.Drawing.Size(118, 18);
             this.toolStripStatusLabelTotalNamedPipes.Text = "toolStripStatusLabel1";
+            // 
+            // Separator
+            // 
+            this.Separator.Name = "Separator";
+            this.Separator.Size = new System.Drawing.Size(6, 23);
             // 
             // toolStripStatusLabelTotalSelectedRows
             // 
             this.toolStripStatusLabelTotalSelectedRows.Name = "toolStripStatusLabelTotalSelectedRows";
-            this.toolStripStatusLabelTotalSelectedRows.Size = new System.Drawing.Size(97, 17);
-            this.toolStripStatusLabelTotalSelectedRows.Text = "|  Selected Rows: ";
+            this.toolStripStatusLabelTotalSelectedRows.Size = new System.Drawing.Size(88, 18);
+            this.toolStripStatusLabelTotalSelectedRows.Text = "Selected Rows: ";
             // 
             // toolStrip1
             // 
@@ -421,7 +430,7 @@
             // hScrollBar1
             // 
             this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 414);
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 413);
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(955, 18);
             this.hScrollBar1.TabIndex = 5;
@@ -528,6 +537,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLastWriteTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnChangeTime;
         private System.Windows.Forms.ToolStripButton colorPermissionsButton;
+        private ToolStripSeparator Separator;
     }
 }
 

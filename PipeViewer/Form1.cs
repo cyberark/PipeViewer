@@ -195,7 +195,7 @@ namespace PipeViewer
             int selectedrowCount = CountSelectedRows(dataGridView1);
 
             // Do something with the selectedCellCount, for example, display it in a label
-            toolStripStatusLabelTotalSelectedRows.Text = "|  Total Selected Rows: " + selectedrowCount.ToString();
+            toolStripStatusLabelTotalSelectedRows.Text = "Total Selected Rows: " + selectedrowCount.ToString();
         }
         // ******************************************************************************
 
