@@ -34,6 +34,7 @@ namespace PipeViewer
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PipeChatForm));
@@ -133,7 +134,7 @@ namespace PipeViewer
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(926, 312);
+            this.dataGridView1.Size = new System.Drawing.Size(926, 336);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
@@ -285,12 +286,12 @@ namespace PipeViewer
             this.tabControl1.Controls.Add(this.TextTab);
             this.tabControl1.Controls.Add(this.BinaryTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControl1.Location = new System.Drawing.Point(0, 339);
+            this.tabControl1.Location = new System.Drawing.Point(0, 363);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Padding = new System.Drawing.Point(0, 0);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(926, 122);
+            this.tabControl1.Size = new System.Drawing.Size(926, 98);
             this.tabControl1.TabIndex = 6;
             // 
             // TextTab
@@ -299,7 +300,7 @@ namespace PipeViewer
             this.TextTab.Location = new System.Drawing.Point(4, 22);
             this.TextTab.Name = "TextTab";
             this.TextTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TextTab.Size = new System.Drawing.Size(918, 96);
+            this.TextTab.Size = new System.Drawing.Size(918, 72);
             this.TextTab.TabIndex = 0;
             this.TextTab.Text = "Text";
             this.TextTab.UseVisualStyleBackColor = true;
@@ -314,7 +315,7 @@ namespace PipeViewer
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
             this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox.Size = new System.Drawing.Size(912, 90);
+            this.textBox.Size = new System.Drawing.Size(912, 66);
             this.textBox.TabIndex = 2;
             this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
             this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
@@ -325,7 +326,7 @@ namespace PipeViewer
             this.BinaryTab.Location = new System.Drawing.Point(4, 22);
             this.BinaryTab.Name = "BinaryTab";
             this.BinaryTab.Padding = new System.Windows.Forms.Padding(3);
-            this.BinaryTab.Size = new System.Drawing.Size(918, 96);
+            this.BinaryTab.Size = new System.Drawing.Size(918, 72);
             this.BinaryTab.TabIndex = 1;
             this.BinaryTab.Text = "Binary";
             this.BinaryTab.UseVisualStyleBackColor = true;
@@ -339,7 +340,7 @@ namespace PipeViewer
             this.chatHexBox.Location = new System.Drawing.Point(3, 3);
             this.chatHexBox.Name = "chatHexBox";
             this.chatHexBox.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.chatHexBox.Size = new System.Drawing.Size(912, 90);
+            this.chatHexBox.Size = new System.Drawing.Size(912, 66);
             this.chatHexBox.StringViewVisible = true;
             this.chatHexBox.TabIndex = 0;
             this.chatHexBox.UseFixedBytesPerLine = true;
@@ -356,7 +357,7 @@ namespace PipeViewer
             this.sendButton.Enabled = false;
             this.sendButton.FlatAppearance.BorderSize = 0;
             this.sendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sendButton.Location = new System.Drawing.Point(885, 463);
+            this.sendButton.Location = new System.Drawing.Point(885, 462);
             this.sendButton.Name = "sendButton";
             this.sendButton.Size = new System.Drawing.Size(29, 29);
             this.sendButton.TabIndex = 7;

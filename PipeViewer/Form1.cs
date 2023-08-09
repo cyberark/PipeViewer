@@ -15,18 +15,26 @@ using System.IO.Pipes;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.DirectoryServices.AccountManagement;
-
+using Newtonsoft.Json;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PipeViewer
 {
     public partial class Form1 : Form
     {
         private int m_NamedPipesNumber;
-        // *********************************************
         private int m_SelectedRowsNumber;
-        // *********************************************
+
+        private bool m_IsFindFormOpen { get; set; } = false;
+        private bool m_IsColumnFilterFormOpen { get; set; } = false;
+        private bool m_IsHighlightFormOpen { get; set; } = false;
+
+        private FormColumnFilter m_FormColumnFilter;
+        private FormHighlighting m_FormHightlightWindow;
+        private FormSearch m_FormFindWindow;
+
         private Tuple<String, String> m_RightClickContent;
-        private ListView m_LastListViewColumnFilter = new ListView();
+        private ListView m_LastListViewColumnFilter = new ListView(); 
         private ListView m_LastListViewHighlighFilter = new ListView();
         private const int SW_SHOW = 5;
         private const uint SEE_MASK_INVOKEIDLIST = 12;
@@ -165,7 +173,6 @@ namespace PipeViewer
             }
         }
 
-        // ******************************************************************************
         int CountSelectedRows(DataGridView dataGridView)
         {
             int count = 0;
@@ -185,10 +192,7 @@ namespace PipeViewer
 
             return count;
         }
-        // ******************************************************************************
 
-
-        // ******************************************************************************
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             // Call the CountSelectedCells function and update the count wherever you want to display it
@@ -197,8 +201,6 @@ namespace PipeViewer
             // Do something with the selectedCellCount, for example, display it in a label
             toolStripStatusLabelTotalSelectedRows.Text = "Total Selected Rows: " + selectedrowCount.ToString();
         }
-        // ******************************************************************************
-
 
         //private delegate void initializePipeListCallBack();
         //private void initializePipeList()
@@ -414,9 +416,7 @@ namespace PipeViewer
             dataGridView1.Refresh();
             m_NamedPipesNumber = 0;
             toolStripStatusLabelTotalNamedPipes.Text = "Total Named Pipes: 0";
-            // *********************************************
             toolStripStatusLabelTotalNamedPipes.Text = "Total Selected Rows: 0";
-            // *********************************************
         }
 
         private void toolStripButtonGrid_Click(object sender, EventArgs e)
@@ -510,12 +510,27 @@ namespace PipeViewer
             m_NamedPipesNumber = 0;
             Task.Run(() => initializePipeList());
         }
+        
 
         private void openFindWindow()
         {
-            FormSearch findWindow = new FormSearch();
-            findWindow.searchForMatch += new FormSearch.searchEventHandler(FindWindow_searchForMatch);
-            findWindow.Show();
+            if (!m_IsFindFormOpen)
+            {
+                m_FormFindWindow = new FormSearch();
+                m_FormFindWindow.searchForMatch += new FormSearch.searchEventHandler(FindWindow_searchForMatch);
+                m_FormFindWindow.FormClosed += findWindow_FormClosed;
+                m_IsFindFormOpen = true;
+                m_FormFindWindow.Show();
+            }
+            else
+            {
+                m_FormFindWindow.Activate();
+            }
+        }
+
+        private void findWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_IsFindFormOpen = false;
         }
 
         private void openPipeChat(string pipeName)
@@ -652,21 +667,53 @@ namespace PipeViewer
 
         private void openColumnFilterWindow()
         {
-            FormColumnFilter columnFilter = new FormColumnFilter(ref m_LastListViewColumnFilter);
-            columnFilter.FilterOKUpdate += new FilterOKEventHandler(ColumnFilter_OKFilter);
-            columnFilter.Show();
+            if (!m_IsColumnFilterFormOpen)
+            {
+                m_FormColumnFilter = new FormColumnFilter(ref m_LastListViewColumnFilter);
+                m_FormColumnFilter.FilterOKUpdate += new FilterOKEventHandler(ColumnFilter_OKFilter);
+                m_FormColumnFilter.FormClosed += columnFilter_FormClosed; // Subscribe to FormClosed event
+                m_IsColumnFilterFormOpen = true; // Set the flag to indicate the form is open
+                m_FormColumnFilter.Show();
+            }
+            else
+            {
+                m_FormColumnFilter.Activate();
+            }
+                
         }
+
+        private void columnFilter_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_IsColumnFilterFormOpen = false; // Reset the flag when the form is closed
+        }
+
 
         private void openHighlightWindows()
         {
-            FormHighlighting hightlightWindow = new FormHighlighting(ref m_LastListViewHighlighFilter);
-            hightlightWindow.hightlightRowsUpdate += HightlightWindow_hightlightRowsUpdate;
-            hightlightWindow.Show();
+            if (!m_IsHighlightFormOpen)
+            {
+                m_FormHightlightWindow = new FormHighlighting(ref m_LastListViewHighlighFilter);
+                m_FormHightlightWindow.hightlightRowsUpdate += HightlightWindow_hightlightRowsUpdate;
+                m_FormHightlightWindow.FormClosed += hightlight_FormClosed;
+                m_IsHighlightFormOpen = true;
+                m_FormHightlightWindow.Show();
+                //hightlightWindow.Activate();
+            }
+            else
+            {
+                m_FormHightlightWindow.Activate();
+            }
+                
+        }
+
+        private void hightlight_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_IsHighlightFormOpen = false; // Reset the flag when the form is closed
         }
 
         private void HightlightWindow_hightlightRowsUpdate(ListView i_ListView)
         {
-            m_LastListViewHighlighFilter = i_ListView;
+            m_LastListViewHighlighFilter = Utils.CopyListView(i_ListView);
             updateFilterDicts(i_ListView, Utils.eFormNames.FormHighlighFilter);
             if (m_IncludeHighlightDict.Count.Equals(0))
             {
@@ -681,7 +728,7 @@ namespace PipeViewer
 
         private void ColumnFilter_OKFilter(ListView i_ListView)
         {
-            m_LastListViewColumnFilter = i_ListView;
+            m_LastListViewColumnFilter = Utils.CopyListView(i_ListView);
             updateFilterDicts(i_ListView, Utils.eFormNames.FormColumnFilter);
             if (m_IncludeFilterDict.Count.Equals(0))
             {
@@ -1022,8 +1069,6 @@ namespace PipeViewer
                 HightlightWindow_hightlightRowsUpdate(m_LastListViewHighlighFilter);
             }
 
-            
-
         }
         private void copyRowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1047,19 +1092,54 @@ namespace PipeViewer
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Save results as CSV";
+            saveDialog.Title = "Save results";
             saveDialog.InitialDirectory = @"c:\";
-            saveDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
-            saveDialog.FilterIndex = 2;
+            saveDialog.Filter = "CSV files (*.csv)|*.csv|JSON files (*.json)|*.json|All files (*.*)|*.*";
+            saveDialog.FilterIndex = 1;
             saveDialog.RestoreDirectory = true;
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
-                saveDataGridViewToCSV(saveDialog.FileName);
+                string filePath = saveDialog.FileName;
+                string fileExtension = Path.GetExtension(filePath).ToLower();
+
+                if (fileExtension == ".csv")
+                {
+                    exportDataGridViewToCSV(filePath);
+                }
+                else if (fileExtension == ".json")
+                {
+                    exportDataGridViewToJSON(filePath);
+                }
+            }
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog importDialog = new OpenFileDialog();
+            importDialog.Title = "Import CSV\\JSON file";
+            importDialog.InitialDirectory = @"c:\";
+            importDialog.Filter = "CSV files (*.csv)|*.csv|JSON files (*.json)|*.json|All files (*.*)|*.*";
+            importDialog.FilterIndex = 1;
+            importDialog.RestoreDirectory = true;
+
+            if (importDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = importDialog.FileName;
+                string fileExtension = Path.GetExtension(filePath).ToLower();
+
+                if (fileExtension == ".csv")
+                {
+                    importDataGridViewToCSV(filePath);
+                }
+                else if (fileExtension == ".json")
+                {
+                    importDataGridViewToJSON(filePath);
+                }
             }
         }
 
         // Taken from https://stackoverflow.com/a/26259909/2153777
-        private void saveDataGridViewToCSV(string filename)
+        private void exportDataGridViewToCSV(string filename)
         {
             DataGridView tempDataGridView = dataGridView1;
             foreach (DataGridViewColumn column in tempDataGridView.Columns)
@@ -1074,6 +1154,73 @@ namespace PipeViewer
             DataObject dataObject = tempDataGridView.GetClipboardContent();
             // Get the text of the DataObject, and serialize it to a file
             File.WriteAllText(filename, dataObject.GetText(TextDataFormat.CommaSeparatedValue).Replace("\n", ""));
+        }
+
+        // TODO: maybe had option to make it as one line? liki mini JSON? 
+        // less readable but might be better for loading.
+        private void exportDataGridViewToJSON(string filename)
+        {
+            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (!row.IsNewRow) // Skip the new row if it exists
+                {
+                    Dictionary<string, object> rowData = new Dictionary<string, object>();
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        if (!cell.OwningColumn.Visible) // Skip hidden columns (optional) 
+                        {
+                            continue;
+                        }
+
+                        string columnName = cell.OwningColumn.Name;
+                        object cellValue = cell.Value ?? DBNull.Value; // Use DBNull for null values
+
+                        rowData.Add(columnName, cellValue);
+                    }
+                    rows.Add(rowData);
+                }
+            }
+
+            // Serialize the data to JSON and write it to the file
+            string jsonData = JsonConvert.SerializeObject(rows, Formatting.Indented);
+            File.WriteAllText(filename, jsonData);
+        }
+        private void importDataGridViewToCSV(string filename)
+        {
+            string[] lines = File.ReadAllLines(filename);
+            dataGridView1.Rows.Clear();
+            for (int i = 1; i < lines.Length; i++)
+            {
+                // Split the line by the delimiter (comma, in this case)
+                string[] values = lines[i].Split(',');
+
+                // Add a new row to the DataGridView
+                dataGridView1.Rows.Add(values.Skip(1).ToArray());
+            }
+        }
+        private void importDataGridViewToJSON(string filename)
+        {
+            string jsonContent = File.ReadAllText(filename);
+
+            // Deserialize the JSON content to a DataTable
+            var dataTable = JsonConvert.DeserializeObject<DataTable>(jsonContent);
+
+            // Clear existing rows from DataGridView
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+
+            // Add columns to DataGridView
+            foreach (DataColumn column in dataTable.Columns)
+            {
+                dataGridView1.Columns.Add(column.ColumnName, column.ColumnName);
+            }
+
+            // Add rows to DataGridView
+            foreach (DataRow row in dataTable.Rows)
+            {
+                dataGridView1.Rows.Add(row.ItemArray);
+            }
         }
 
         private void showPermissionsByColorButton(object sender, EventArgs e)
@@ -1185,7 +1332,6 @@ namespace PipeViewer
                 System.Windows.Forms.Clipboard.SetText(copiedCell);
             }
         }
-
 
         #endregion
 

@@ -19,7 +19,7 @@ namespace PipeViewer
                 this.listViewColumnFilters.Items.Add(clonedItem);
             }
         }
-
+     
         public virtual void OnFilterOKUpdate(ListView i_listViewColumnFilter)
         {
             bool empty = true;
