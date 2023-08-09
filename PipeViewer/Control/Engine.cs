@@ -225,7 +225,7 @@ namespace PipeViewer.Control
         }
 
         //public static NtFile CreateNamedPipe(string name, NtObject root, FileAccessRights desired_access,
-        //    FileShareMode share_access, FileOpenOptions open_options, FileDisposition disposition, NamedPipeType pipe_type,
+        //    FileeMode share_access, FileOpenOptions open_options, FileDisposition disposition, NamedPipeType pipe_type,
         //    NamedPipeReadMode read_mode, NamedPipeCompletionMode completion_mode, int maximum_instances, int input_quota,
         //    int output_quota, NtWaitTimeout default_timeout)
         //{

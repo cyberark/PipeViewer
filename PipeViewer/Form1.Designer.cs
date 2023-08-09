@@ -294,14 +294,14 @@ namespace PipeViewer
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.saveToolStripMenuItem.Text = "Export...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.importToolStripMenuItem.Text = "Import...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -316,7 +316,7 @@ namespace PipeViewer
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -336,7 +336,7 @@ namespace PipeViewer
             // 
             this.toolStripStatusLabelTotalNamedPipes.Name = "toolStripStatusLabelTotalNamedPipes";
             this.toolStripStatusLabelTotalNamedPipes.Size = new System.Drawing.Size(118, 18);
-            this.toolStripStatusLabelTotalNamedPipes.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabelTotalNamedPipes.Text = "Total Named Pipes: 0";
             // 
             // Separator
             // 
@@ -347,7 +347,7 @@ namespace PipeViewer
             // 
             this.toolStripStatusLabelTotalSelectedRows.Name = "toolStripStatusLabelTotalSelectedRows";
             this.toolStripStatusLabelTotalSelectedRows.Size = new System.Drawing.Size(88, 18);
-            this.toolStripStatusLabelTotalSelectedRows.Text = "Selected Rows: ";
+            this.toolStripStatusLabelTotalSelectedRows.Text = "Selected Rows: 0";
             // 
             // toolStrip1
             // 
@@ -368,11 +368,11 @@ namespace PipeViewer
             // toolStripButtonRefresh
             // 
             this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRefresh.Image = global::PipeViewer.Properties.Resources.refresh;
+            this.toolStripButtonRefresh.Image = global::PipeViewer.Properties.Resources.startIcon;
             this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
             this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonRefresh.Text = "Refresh";
+            this.toolStripButtonRefresh.Text = "Start";
             this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
             // 
             // toolStripButtonClear

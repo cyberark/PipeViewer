@@ -150,7 +150,7 @@ namespace PipeViewer
                 m_ProcessPIDsDictionary.Add(p.Id, p.ProcessName);
             }
 
-            initializePipeList();
+            // initializePipeList();
         }
 
         private delegate void addNamedPipeToDataGridViewCallBack(string i_NamedPipe);
@@ -505,6 +505,8 @@ namespace PipeViewer
 
         private void toolStripButtonRefresh_Click(object sender, EventArgs e)
         {
+            toolStripButtonRefresh.Image = global::PipeViewer.Properties.Resources.refresh;
+            this.toolStripButtonRefresh.Text = "Refresh";
             dataGridView1.Rows.Clear();
             dataGridView1.Refresh();
             m_NamedPipesNumber = 0;

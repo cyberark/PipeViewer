@@ -13,14 +13,25 @@ namespace PipeViewer
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// 
+        /// We changed a bit this function because of an exception: 
+        /// "Value dispose cannot be called while doing CreateHandle()".
+        /// We might consider regactoring the startClient function, it seems that the problem
+        /// caused by modify UI controls in a different thread.
         protected override void Dispose(bool disposing)
         {
-            
             if (disposing && (components != null))
             {
-                components.Dispose();
+                BeginInvoke(new Action(() =>
+                {
+                    components.Dispose();  // Dispose after handle is created
+                }));
             }
-            base.Dispose(disposing);
+
+            BeginInvoke(new Action(() =>
+            {
+                base.Dispose(disposing);
+            }));
         }
 
         #region Windows Form Designer generated code
@@ -34,7 +45,6 @@ namespace PipeViewer
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PipeChatForm));

@@ -22,6 +22,8 @@ namespace PipeViewer
         private List<byte> m_ByteList = new List<byte>();
         private bool m_Closed = false;
         private string m_LastSearchValue = string.Empty;
+        private bool m_IsSearchFormOpen { get; set; } = false;
+        private FormSearch m_FormSearchWindow;
 
         public PipeChatForm(string i_PipeName)
         {            
@@ -577,11 +579,27 @@ namespace PipeViewer
             openSearchForm();
         }
 
+
+
         private void openSearchForm()
         {
-            FormSearch findWindow = new FormSearch();
-            findWindow.searchForMatch += new FormSearch.searchEventHandler(FindWindow_searchForMatch);
-            findWindow.Show();
+            if (!m_IsSearchFormOpen)
+            {
+                m_FormSearchWindow = new FormSearch();
+                m_FormSearchWindow.searchForMatch += new FormSearch.searchEventHandler(FindWindow_searchForMatch);
+                m_FormSearchWindow.FormClosed += searchWindow_FormClosed;
+                m_IsSearchFormOpen = true;
+                m_FormSearchWindow.Show();
+            }
+            else
+            {
+                m_FormSearchWindow.Activate();
+            }
+        }
+
+        private void searchWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_IsSearchFormOpen = false;
         }
 
         private void FindWindow_searchForMatch(string i_SearchString, bool i_SearchDown, bool i_MatchWholeWord, bool i_MatchSensitive)
