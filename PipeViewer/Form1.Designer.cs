@@ -59,6 +59,7 @@ namespace PipeViewer
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -73,7 +74,6 @@ namespace PipeViewer
             this.toolStripButtonHighLight = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGrid = new System.Windows.Forms.ToolStripButton();
             this.colorPermissionsButton = new System.Windows.Forms.ToolStripButton();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.contextMenuStripRightClickGridView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -119,7 +119,7 @@ namespace PipeViewer
             this.dataGridView1.Location = new System.Drawing.Point(3, 52);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(951, 366);
+            this.dataGridView1.Size = new System.Drawing.Size(951, 376);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
@@ -285,7 +285,8 @@ namespace PipeViewer
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem});
+            this.saveToolStripMenuItem,
+            this.importToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -293,9 +294,16 @@ namespace PipeViewer
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.saveToolStripMenuItem.Text = "Save...";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Export...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Text = "Import...";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -308,7 +316,7 @@ namespace PipeViewer
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -427,15 +435,6 @@ namespace PipeViewer
             this.colorPermissionsButton.Text = "Hide permissions color";
             this.colorPermissionsButton.Click += new System.EventHandler(this.showPermissionsByColorButton);
             // 
-            // hScrollBar1
-            // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 413);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(955, 18);
-            this.hScrollBar1.TabIndex = 5;
-            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
-            // 
             // contextMenuStripRightClickGridView
             // 
             this.contextMenuStripRightClickGridView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -464,7 +463,6 @@ namespace PipeViewer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 454);
-            this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dataGridView1);
@@ -494,25 +492,20 @@ namespace PipeViewer
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelTotalNamedPipes;
-
-        //***************************************************************************
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelTotalSelectedRows;
-        
-        //***************************************************************************
-
         private System.Windows.Forms.ToolStripButton toolStripButtonClear;
         private System.Windows.Forms.ToolStripButton toolStripButtonFilter;
         private System.Windows.Forms.ToolStripButton toolStripButtonFind;
         private System.Windows.Forms.ToolStripButton toolStripButtonHighLight;
         private System.Windows.Forms.ToolStripButton toolStripButtonGrid;
         private System.Windows.Forms.ToolStripButton toolStripButtonRefresh;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRightClickGridView;
         private System.Windows.Forms.ToolStripMenuItem copyRowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyCellToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnIntegrityLevel;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPermissions;

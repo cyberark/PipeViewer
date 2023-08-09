@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Pipes;
 using System.Security.AccessControl;
+using System.Windows.Forms;
 
 namespace PipeViewer
 {
@@ -71,6 +72,30 @@ namespace PipeViewer
             "LastWriteTime",
             "ChangeTime"
         };
+
+        public static ListView CopyListView(ListView originalListView)
+        {
+            ListView copiedListView = new ListView();
+
+            // Copy properties from the original ListView
+            copiedListView.View = originalListView.View;
+            copiedListView.FullRowSelect = originalListView.FullRowSelect;
+
+            // Copy columns
+            foreach (ColumnHeader column in originalListView.Columns)
+            {
+                copiedListView.Columns.Add((ColumnHeader)column.Clone());
+            }
+
+            // Copy items
+            foreach (ListViewItem item in originalListView.Items)
+            {
+                ListViewItem copiedItem = (ListViewItem)item.Clone();
+                copiedListView.Items.Add(copiedItem);
+            }
+
+            return copiedListView;
+        }
 
         //static Utils()
         //{
