@@ -74,6 +74,7 @@ namespace PipeViewer
             this.toolStripButtonHighLight = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGrid = new System.Windows.Forms.ToolStripButton();
             this.colorPermissionsButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonStatus = new System.Windows.Forms.ToolStripButton();
             this.contextMenuStripRightClickGridView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -294,14 +295,14 @@ namespace PipeViewer
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.saveToolStripMenuItem.Text = "Export...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.importToolStripMenuItem.Text = "Import...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -316,7 +317,7 @@ namespace PipeViewer
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -335,8 +336,8 @@ namespace PipeViewer
             // toolStripStatusLabelTotalNamedPipes
             // 
             this.toolStripStatusLabelTotalNamedPipes.Name = "toolStripStatusLabelTotalNamedPipes";
-            this.toolStripStatusLabelTotalNamedPipes.Size = new System.Drawing.Size(118, 18);
-            this.toolStripStatusLabelTotalNamedPipes.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabelTotalNamedPipes.Size = new System.Drawing.Size(117, 18);
+            this.toolStripStatusLabelTotalNamedPipes.Text = "Total Named Pipes: 0";
             // 
             // Separator
             // 
@@ -346,8 +347,8 @@ namespace PipeViewer
             // toolStripStatusLabelTotalSelectedRows
             // 
             this.toolStripStatusLabelTotalSelectedRows.Name = "toolStripStatusLabelTotalSelectedRows";
-            this.toolStripStatusLabelTotalSelectedRows.Size = new System.Drawing.Size(88, 18);
-            this.toolStripStatusLabelTotalSelectedRows.Text = "Selected Rows: ";
+            this.toolStripStatusLabelTotalSelectedRows.Size = new System.Drawing.Size(94, 18);
+            this.toolStripStatusLabelTotalSelectedRows.Text = "Selected Rows: 0";
             // 
             // toolStrip1
             // 
@@ -358,7 +359,8 @@ namespace PipeViewer
             this.toolStripButtonFind,
             this.toolStripButtonHighLight,
             this.toolStripButtonGrid,
-            this.colorPermissionsButton});
+            this.colorPermissionsButton,
+            this.toolStripButtonStatus});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(955, 25);
@@ -368,11 +370,11 @@ namespace PipeViewer
             // toolStripButtonRefresh
             // 
             this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRefresh.Image = global::PipeViewer.Properties.Resources.refresh;
+            this.toolStripButtonRefresh.Image = global::PipeViewer.Properties.Resources.startIcon;
             this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
             this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonRefresh.Text = "Refresh";
+            this.toolStripButtonRefresh.Text = "Start";
             this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
             // 
             // toolStripButtonClear
@@ -434,6 +436,16 @@ namespace PipeViewer
             this.colorPermissionsButton.Size = new System.Drawing.Size(23, 22);
             this.colorPermissionsButton.Text = "Hide permissions color";
             this.colorPermissionsButton.Click += new System.EventHandler(this.showPermissionsByColorButton);
+            // 
+            // toolStripButtonStatus
+            // 
+            this.toolStripButtonStatus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonStatus.Image = global::PipeViewer.Properties.Resources.search__2_;
+            this.toolStripButtonStatus.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonStatus.Name = "toolStripButtonStatus";
+            this.toolStripButtonStatus.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonStatus.Text = "Show connected pipes";
+            this.toolStripButtonStatus.Click += new System.EventHandler(this.toolStripButtonConnectionStatus_Click);
             // 
             // contextMenuStripRightClickGridView
             // 
@@ -531,6 +543,7 @@ namespace PipeViewer
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnChangeTime;
         private System.Windows.Forms.ToolStripButton colorPermissionsButton;
         private ToolStripSeparator Separator;
+        private ToolStripButton toolStripButtonStatus;
     }
 }
 

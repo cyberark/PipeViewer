@@ -233,6 +233,16 @@ namespace PipeViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap search__2_ {
+            get {
+                object obj = ResourceManager.GetObject("search (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap send {
             get {
                 object obj = ResourceManager.GetObject("send", resourceCulture);
@@ -246,6 +256,16 @@ namespace PipeViewer.Properties {
         internal static System.Drawing.Bitmap send__button_icon_small {
             get {
                 object obj = ResourceManager.GetObject("send__button_icon_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap startIcon {
+            get {
+                object obj = ResourceManager.GetObject("startIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

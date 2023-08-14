@@ -88,7 +88,7 @@
             this.comboBoxValue.FormattingEnabled = true;
             this.comboBoxValue.Location = new System.Drawing.Point(244, 25);
             this.comboBoxValue.Name = "comboBoxValue";
-            this.comboBoxValue.Size = new System.Drawing.Size(412, 21);
+            this.comboBoxValue.Size = new System.Drawing.Size(428, 21);
             this.comboBoxValue.TabIndex = 3;
             // 
             // listViewColumnFilters
@@ -105,7 +105,7 @@
             this.listViewColumnFilters.HideSelection = false;
             this.listViewColumnFilters.Location = new System.Drawing.Point(15, 85);
             this.listViewColumnFilters.Name = "listViewColumnFilters";
-            this.listViewColumnFilters.Size = new System.Drawing.Size(776, 312);
+            this.listViewColumnFilters.Size = new System.Drawing.Size(792, 351);
             this.listViewColumnFilters.TabIndex = 4;
             this.listViewColumnFilters.UseCompatibleStateImageBehavior = false;
             this.listViewColumnFilters.View = System.Windows.Forms.View.Details;
@@ -136,7 +136,7 @@
             this.comboBoxAction.Items.AddRange(new object[] {
             "Include",
             "Exclude"});
-            this.comboBoxAction.Location = new System.Drawing.Point(704, 25);
+            this.comboBoxAction.Location = new System.Drawing.Point(720, 25);
             this.comboBoxAction.Name = "comboBoxAction";
             this.comboBoxAction.Size = new System.Drawing.Size(84, 21);
             this.comboBoxAction.TabIndex = 5;
@@ -144,7 +144,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(551, 415);
+            this.buttonOK.Location = new System.Drawing.Point(567, 454);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 6;
@@ -155,7 +155,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(632, 415);
+            this.buttonCancel.Location = new System.Drawing.Point(648, 454);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 7;
@@ -166,7 +166,7 @@
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Location = new System.Drawing.Point(623, 56);
+            this.buttonAdd.Location = new System.Drawing.Point(639, 56);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 8;
@@ -177,7 +177,7 @@
             // buttonRemove
             // 
             this.buttonRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemove.Location = new System.Drawing.Point(713, 56);
+            this.buttonRemove.Location = new System.Drawing.Point(729, 56);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(75, 23);
             this.buttonRemove.TabIndex = 9;
@@ -189,7 +189,7 @@
             // 
             this.labelThen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelThen.AutoSize = true;
-            this.labelThen.Location = new System.Drawing.Point(662, 28);
+            this.labelThen.Location = new System.Drawing.Point(678, 28);
             this.labelThen.Name = "labelThen";
             this.labelThen.Size = new System.Drawing.Size(28, 13);
             this.labelThen.TabIndex = 10;
@@ -198,7 +198,7 @@
             // buttonReset
             // 
             this.buttonReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonReset.Location = new System.Drawing.Point(15, 56);
+            this.buttonReset.Location = new System.Drawing.Point(31, 56);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(75, 23);
             this.buttonReset.TabIndex = 11;
@@ -209,7 +209,7 @@
             // buttonApply
             // 
             this.buttonApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonApply.Location = new System.Drawing.Point(716, 415);
+            this.buttonApply.Location = new System.Drawing.Point(732, 454);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(75, 23);
             this.buttonApply.TabIndex = 13;
@@ -221,7 +221,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(816, 489);
             this.Controls.Add(this.buttonApply);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.labelThen);
