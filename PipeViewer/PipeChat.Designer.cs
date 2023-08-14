@@ -367,9 +367,9 @@ namespace PipeViewer
             this.sendButton.Enabled = false;
             this.sendButton.FlatAppearance.BorderSize = 0;
             this.sendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sendButton.Location = new System.Drawing.Point(885, 462);
+            this.sendButton.Location = new System.Drawing.Point(896, 469);
             this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(29, 29);
+            this.sendButton.Size = new System.Drawing.Size(23, 23);
             this.sendButton.TabIndex = 7;
             this.sendButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.sendButton.UseVisualStyleBackColor = false;

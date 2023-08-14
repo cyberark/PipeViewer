@@ -17,6 +17,8 @@ using System.Security.Principal;
 using System.DirectoryServices.AccountManagement;
 using Newtonsoft.Json;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Runtime.Remoting.Contexts;
 
 namespace PipeViewer
 {
@@ -36,6 +38,7 @@ namespace PipeViewer
         private Tuple<String, String> m_RightClickContent;
         private ListView m_LastListViewColumnFilter = new ListView(); 
         private ListView m_LastListViewHighlighFilter = new ListView();
+        private ListView m_LastListViewConnectionStatus = new ListView();
         private const int SW_SHOW = 5;
         private const uint SEE_MASK_INVOKEIDLIST = 12;
         private string m_LastSearchValue;
@@ -952,6 +955,68 @@ namespace PipeViewer
             openHighlightWindows();
         }
 
+        private void toolStripButtonConnectionStatus_Click(object sender, EventArgs e)
+        {
+            connectionStatusRowsUpdate(m_LastListViewConnectionStatus);
+        }
+
+        private void connectionStatusRowsUpdate(ListView i_ListView)
+        {
+            //m_LastListViewConnectionStatus = Utils.CopyListView(i_ListView);
+            foreach (DataGridViewRow row in this.dataGridView1.Rows)
+            {
+                DataGridViewCell nameCell = row.Cells[m_ColumnIndexes[ColumnName.HeaderText]];
+                string pipeName = nameCell.Value.ToString();
+                pipeName = pipeName.Replace(@"\\.\pipe\", "");
+                checkAndMarkPipeConnected(pipeName, nameCell);
+            }
+        }
+
+        private void checkAndMarkPipeConnected(string pipeName, DataGridViewCell nameCell)
+        {
+
+            Task task = Task.Run(() =>
+            {
+                using (NamedPipeClientStream m_Client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous))
+                {
+                    try
+                    {
+                        // one second
+                        m_Client.Connect(1000);
+                    }
+                    catch
+                    {
+                        nameCell.Style.BackColor = Color.Red;
+                    }
+
+                    if (m_Client.IsConnected)
+                    {
+                        nameCell.Style.BackColor = Color.GreenYellow;
+                    }
+                    else 
+                    { 
+                        nameCell.Style.BackColor = Color.Red;
+                    }
+                }
+            });
+        }
+
+
+        //private void HightlightWindow_hightlightRowsUpdate(ListView i_ListView)
+        //{
+        //    m_LastListViewHighlighFilter = Utils.CopyListView(i_ListView);
+        //    updateFilterDicts(i_ListView, Utils.eFormNames.FormHighlighFilter);
+        //    if (m_IncludeHighlightDict.Count.Equals(0))
+        //    {
+        //        foreach (DataGridViewRow row in this.dataGridView1.Rows)
+        //        {
+        //            this.dataGridView1.Rows[row.Index].DefaultCellStyle.BackColor = Color.White;
+        //        }
+        //        return;
+        //    }
+        //    filterRowsByFilterRules(Utils.eFormNames.FormHighlighFilter);
+        //}
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormAbout about = new FormAbout();
@@ -1140,6 +1205,7 @@ namespace PipeViewer
             }
         }
 
+
         // Taken from https://stackoverflow.com/a/26259909/2153777
         private void exportDataGridViewToCSV(string filename)
         {
@@ -1298,6 +1364,7 @@ namespace PipeViewer
             }
         }
 
+
         private void includeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //ListViewItem item = new ListViewItem(m_RightClickCellContent);
@@ -1316,6 +1383,7 @@ namespace PipeViewer
                 contextMenuStripRightClickGridView.Items.RemoveAt(2);
             }
         }
+
 
 
         private void copyCellToolStripMenuItem_Click(object sender, EventArgs e)

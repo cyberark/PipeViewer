@@ -34,6 +34,9 @@ namespace PipeViewer
             dataGridView1.Columns["ColumnText"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dataGridView1.Columns["ColumnBinary"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             chatHexBox.ByteProvider = new DynamicByteProvider(m_ByteList);
+            m_Client = new NamedPipeClientStream(".", m_PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+            m_Client.ConnectAsync();
+            bool isConnected = m_Client.IsConnected;
             startClient();
         }
 
@@ -105,6 +108,11 @@ namespace PipeViewer
             }
         }
 
+        public string getConnectionStatus()
+        {
+            return this.isConnectedLabel.Text;
+        }
+
         private string encodeByteToString(byte[] i_Buffer, int i_BytesRead)
         {
             StringBuilder encodedString = new StringBuilder();
@@ -123,6 +131,7 @@ namespace PipeViewer
             chatHexBox.Enabled = i_EnabledOrDisabled;
             sendButton.Enabled = i_EnabledOrDisabled;
         }
+
 
         private void addRowToDataGridView(string i_Text, string i_BinaryText = "", Color i_ForeColor = default(Color), Color i_BackColor = default(Color), Bitmap i_Icon = null)
         {
