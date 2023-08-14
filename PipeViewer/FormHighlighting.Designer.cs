@@ -60,30 +60,7 @@
             // 
             this.comboBoxColumn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxColumn.FormattingEnabled = true;
-            this.comboBoxColumn.Items.AddRange(new object[] {
-            "Name",
-            "IntegrityLevel",
-            "Permissions",
-            "SDDL",
-            "ClientPID",
-            "PipeType",
-            "Configuration",
-            "ReadMode",
-            "NumberOfLinks",
-            "DirectoryGrantedAccess",
-            "GrantedAccess",
-            "GrantedAccessGeneric",
-            "OwnerSid",
-            "OwnerName",
-            "GroupSid",
-            "GroupName",
-            "EndPointType",
-            "Handle",
-            "CreationTime",
-            "FileCreationTime",
-            "LastAccessTime",
-            "LastWriteTime",
-            "ChangeTime"});
+            this.comboBoxColumn.Items.AddRange(Utils.ColumnNames);
             this.comboBoxColumn.Location = new System.Drawing.Point(12, 25);
             this.comboBoxColumn.Name = "comboBoxColumn";
             this.comboBoxColumn.Size = new System.Drawing.Size(121, 21);

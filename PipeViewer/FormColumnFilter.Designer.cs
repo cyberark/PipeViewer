@@ -61,30 +61,7 @@
             this.comboBoxSearchByColumn.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxSearchByColumn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchByColumn.FormattingEnabled = true;
-            this.comboBoxSearchByColumn.Items.AddRange(new object[] {
-            "Name",
-            "IntegrityLevel",
-            "Permissions",
-            "SDDL",
-            "ClientPID",
-            "PipeType",
-            "Configuration",
-            "ReadMode",
-            "NumberOfLinks",
-            "DirectoryGrantedAccess",
-            "GrantedAccess",
-            "GrantedAccessGeneric",
-            "OwnerSid",
-            "OwnerName",
-            "GroupSid",
-            "GroupName",
-            "EndPointType",
-            "Handle",
-            "CreationTime",
-            "FileCreationTime",
-            "LastAccessTime",
-            "LastWriteTime",
-            "ChangeTime"});
+            this.comboBoxSearchByColumn.Items.AddRange(Utils.ColumnNames);
             this.comboBoxSearchByColumn.Location = new System.Drawing.Point(12, 25);
             this.comboBoxSearchByColumn.Name = "comboBoxSearchByColumn";
             this.comboBoxSearchByColumn.Size = new System.Drawing.Size(121, 21);
