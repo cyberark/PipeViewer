@@ -427,12 +427,14 @@ namespace PipeViewer
             if (!m_IsGridButtonPressed)
             {
                 toolStripButtonGrid.Image = global::PipeViewer.Properties.Resources.grid;
+                this.toolStripButtonGrid.Text = "Show Grid";
                 m_IsGridButtonPressed = true;
                 this.dataGridView1.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.None;
 
             }
             else
             {
+                this.toolStripButtonGrid.Text = "Hide Grid";
                 toolStripButtonGrid.Image = global::PipeViewer.Properties.Resources.grid_disable;
                 m_IsGridButtonPressed = false;
                 this.dataGridView1.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
@@ -660,7 +662,7 @@ namespace PipeViewer
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            // TODO: Whenimplement...
+            // TODO: When implement...
         }
 
         #region Column Filter
@@ -981,8 +983,8 @@ namespace PipeViewer
                 {
                     try
                     {
-                        // one second
-                        m_Client.Connect(1000);
+                        // half a second
+                        m_Client.Connect(500);
                     }
                     catch
                     {
