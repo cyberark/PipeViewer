@@ -118,7 +118,7 @@ namespace PipeViewer
             //dummyLoopRowsForDebug();
             //Task.Run(() => dummyLoopRowsForDebug());
             Task.Run(() => InitializePipeListWithProcesses());
-
+            //Task.Run(() => initializePipeListOrig()); 
             //Thread t = new Thread(new ThreadStart(InitializePipeListWithProcesses));
             //t.Start();
         }
@@ -152,7 +152,7 @@ namespace PipeViewer
             {
                 m_ProcessPIDsDictionary.Add(p.Id, p.ProcessName);
             }
-
+      
             // initializePipeList();
         }
 
@@ -167,13 +167,60 @@ namespace PipeViewer
             }
         }
 
-        private void initializePipeList()
+        // # version 1
+        private void initializePipeListOrig()
         {
             String[] listOfPipes = System.IO.Directory.GetFiles(@"\\.\pipe\");
             foreach (var namedPipe in listOfPipes)
             {
                 addNamedPipeToDataGridView(namedPipe);
             }
+        }
+
+        // # version 2
+        //private void initializePipeListNew()
+        //{
+        //    String[] listOfPipes = System.IO.Directory.GetFiles(@"\\.\pipe\");
+
+        //    // ONLY FOR TEST
+        //    int numberOfPipesToSelect = 1000;
+        //    string[] selectedPipes = new string[Math.Min(numberOfPipesToSelect, listOfPipes.Length)];
+        //    Array.Copy(listOfPipes, selectedPipes, selectedPipes.Length);
+        //    // ONLY FOR TEST
+
+        //    int PartsSize = 30;
+        //    for (int i = 0; i < Math.Ceiling((double)listOfPipes.Length / PartsSize); i++)
+        //    {
+        //        int StartIndex = PartsSize * i;
+        //        ThreadPool.QueueUserWorkItem(state =>
+        //        {
+        //            initializeSomePipes(listOfPipes, StartIndex, PartsSize);
+        //        });
+        //    }
+        //}
+
+        //private void initializeSomePipes(String[] listOfPipes, int StartIndex, int PipesAmount)
+        //{
+        //    int i = StartIndex;
+        //    int Count = 0;
+        //    while (i < listOfPipes.Length && Count < PipesAmount)
+        //    {
+        //        var namedPipe = listOfPipes[i];
+        //        addNamedPipeToDataGridView(namedPipe);
+        //        i++;
+        //        Count++;
+        //    }
+        //}
+
+        // # version 3
+        private void initializePipeList()
+        {
+            string[] listOfPipes = System.IO.Directory.GetFiles(@"\\.\pipe\");
+
+            Parallel.ForEach(listOfPipes, namedPipe =>
+            {
+                addNamedPipeToDataGridView(namedPipe);
+            });
         }
 
         int CountSelectedRows(DataGridView dataGridView)
@@ -337,7 +384,6 @@ namespace PipeViewer
                 this.m_NamedPipesNumber += 1;
                 this.toolStripStatusLabelTotalNamedPipes.Text = "Total Named Pipes: " + this.m_NamedPipesNumber;
 
-
             }
         }
 
@@ -427,16 +473,16 @@ namespace PipeViewer
             if (!m_IsGridButtonPressed)
             {
                 toolStripButtonGrid.Image = global::PipeViewer.Properties.Resources.grid;
-                this.toolStripButtonGrid.Text = "Show Grid";
+                this.toolStripButtonGrid.Text = "Hide Grid";
                 m_IsGridButtonPressed = true;
                 this.dataGridView1.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.None;
 
             }
             else
             {
-                this.toolStripButtonGrid.Text = "Hide Grid";
                 toolStripButtonGrid.Image = global::PipeViewer.Properties.Resources.grid_disable;
                 m_IsGridButtonPressed = false;
+                this.toolStripButtonGrid.Text = "Show Grid";
                 this.dataGridView1.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
             }
         }
@@ -515,7 +561,15 @@ namespace PipeViewer
             dataGridView1.Rows.Clear();
             dataGridView1.Refresh();
             m_NamedPipesNumber = 0;
-            Task.Run(() => initializePipeList());
+
+            Task.Run(() => {
+                //Stopwatch stopwatch = new Stopwatch(); // Create a stopwatch to measure time
+                //stopwatch.Start(); // Start the stopwatch
+                initializePipeList();
+                //stopwatch.Stop(); // Stop the stopwatch when the task completes
+                //TimeSpan elapsedTime = stopwatch.Elapsed;
+                //MessageBox.Show($"Task completed in {elapsedTime.TotalMilliseconds} milliseconds", "Task Completed");
+            });
         }
         
 
@@ -525,7 +579,7 @@ namespace PipeViewer
             {
                 m_FormFindWindow = new FormSearch();
                 m_FormFindWindow.searchForMatch += new FormSearch.searchEventHandler(FindWindow_searchForMatch);
-                m_FormFindWindow.FormClosed += findWindow_FormClosed;
+                m_FormFindWindow.FormClosed += findWindow_FormClosed;   
                 m_IsFindFormOpen = true;
                 m_FormFindWindow.Show();
             }
@@ -1046,11 +1100,6 @@ namespace PipeViewer
                     ToolStripItem[] items = createNewToolStripMenuItem(e.RowIndex, e.ColumnIndex);
                 }
                 contextMenuStripRightClickGridView.Show(Cursor.Position.X, Cursor.Position.Y);
-
-
-
-
-
             }
         }
         private ToolStripItem[] createNewToolStripMenuItem(int rowIndex, int columnIndex)
@@ -1206,7 +1255,6 @@ namespace PipeViewer
                 }
             }
         }
-
 
         // Taken from https://stackoverflow.com/a/26259909/2153777
         private void exportDataGridViewToCSV(string filename)
@@ -1366,7 +1414,6 @@ namespace PipeViewer
             }
         }
 
-
         private void includeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //ListViewItem item = new ListViewItem(m_RightClickCellContent);
@@ -1385,8 +1432,6 @@ namespace PipeViewer
                 contextMenuStripRightClickGridView.Items.RemoveAt(2);
             }
         }
-
-
 
         private void copyCellToolStripMenuItem_Click(object sender, EventArgs e)
         {
