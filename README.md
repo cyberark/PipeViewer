@@ -2,7 +2,6 @@
 [![License][license-img]][license]
 ![Downloads][download]
 
-
 <img src="https://github.com/cyberark/PipeViewer/blob/assets/pipeviewer_logo.png" width="260">   
 A GUI tool for viewing Windows Named Pipes and searching for insecure permissions.  
 
@@ -24,7 +23,6 @@ When downloading it from GitHub you might get error of block files, you can use 
 Get-ChildItem -Path 'D:\tmp\PipeViewer-main' -Recurse | Unblock-File
 ```
 
-
 ## Warning  
 We built the project and uploaded it so you can find it in the releases.  
 One problem is that the binary will trigger alerts from Windows Defender because it uses the NtObjerManager package which is flagged as virus.  
@@ -42,11 +40,8 @@ We can't change it because we depend on third-party DLL.
 * Executer - allows send\receive data to one or more named pipes
 * Properties window for each named pipe by right click
 
-
 ## Demo  
 https://user-images.githubusercontent.com/11998736/215425682-c5219395-16ea-42e9-8d1e-a636771b5ba2.mp4
-
-
 
 ## Credit
 We want to thank James Forshaw ([@tyranid](https://github.com/tyranid)) for creating the open source [NtApiDotNet](https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools/tree/main/NtApiDotNet) which allowed us to get information about named pipes.  
@@ -55,8 +50,7 @@ We want to thank James Forshaw ([@tyranid](https://github.com/tyranid)) for crea
 Copyright (c) 2023 CyberArk Software Ltd. All rights reserved  
 This repository is licensed under  Apache-2.0 License - see [`LICENSE`](LICENSE) for more details.
 
-
-## References:
+## References
 For more comments, suggestions or questions, you can contact Eviatar Gerzi ([@g3rzi](https://twitter.com/g3rzi)) and CyberArk Labs.
 
 [release-img]: https://img.shields.io/github/release/cyberark/PipeViewer.svg
