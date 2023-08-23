@@ -33,12 +33,8 @@ We can't change it because we depend on third-party DLL.
 * A detailed overview of named pipes.
 * Filter\highlight rows based on cells.
 * Bold specific rows.
-* Export\Import to\from JSON
-
-## Upcoming Features
-* Mark the pipes that you can access
-* Executer - allows send\receive data to one or more named pipes
-* Properties window for each named pipe by right click
+* Export\Import to\from JSON.
+* PipeChat - create a connection with available named pipes.
 
 ## Demo  
 https://user-images.githubusercontent.com/11998736/215425682-c5219395-16ea-42e9-8d1e-a636771b5ba2.mp4
