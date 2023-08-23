@@ -1213,8 +1213,9 @@ namespace PipeViewer
             saveDialog.Title = "Save results";
             saveDialog.InitialDirectory = @"c:\";
             saveDialog.Filter = "CSV files (*.csv)|*.csv|JSON files (*.json)|*.json|All files (*.*)|*.*";
-            saveDialog.FilterIndex = 1;
+            saveDialog.FilterIndex = 2;
             saveDialog.RestoreDirectory = true;
+            saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = saveDialog.FileName;
@@ -1237,8 +1238,9 @@ namespace PipeViewer
             importDialog.Title = "Import CSV\\JSON file";
             importDialog.InitialDirectory = @"c:\";
             importDialog.Filter = "CSV files (*.csv)|*.csv|JSON files (*.json)|*.json|All files (*.*)|*.*";
-            importDialog.FilterIndex = 1;
+            importDialog.FilterIndex = 2;
             importDialog.RestoreDirectory = true;
+            importDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             if (importDialog.ShowDialog() == DialogResult.OK)
             {
@@ -1254,6 +1256,9 @@ namespace PipeViewer
                     importDataGridViewToJSON(filePath);
                 }
             }
+
+            // because we import the data without the color.
+            this.m_showPermissionColor = false;
         }
 
         // Taken from https://stackoverflow.com/a/26259909/2153777
@@ -1274,7 +1279,7 @@ namespace PipeViewer
             File.WriteAllText(filename, dataObject.GetText(TextDataFormat.CommaSeparatedValue).Replace("\n", ""));
         }
 
-        // TODO: maybe had option to make it as one line? liki mini JSON? 
+        // TODO: maybe had option to make it as one line? like mini JSON? 
         // less readable but might be better for loading.
         private void exportDataGridViewToJSON(string filename)
         {
@@ -1291,7 +1296,7 @@ namespace PipeViewer
                             continue;
                         }
 
-                        string columnName = cell.OwningColumn.Name;
+                        string columnName = cell.OwningColumn.Name.Substring("Column".Length);
                         object cellValue = cell.Value ?? DBNull.Value; // Use DBNull for null values
 
                         rowData.Add(columnName, cellValue);
@@ -1300,8 +1305,12 @@ namespace PipeViewer
                 }
             }
 
+            // Help to keep the strings as they are (instead of showing 8192 for "Medium" it will show the string)
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter()); 
+
             // Serialize the data to JSON and write it to the file
-            string jsonData = JsonConvert.SerializeObject(rows, Formatting.Indented);
+            string jsonData = JsonConvert.SerializeObject(rows, Formatting.Indented, settings);
             File.WriteAllText(filename, jsonData);
         }
         private void importDataGridViewToCSV(string filename)
@@ -1331,7 +1340,7 @@ namespace PipeViewer
             // Add columns to DataGridView
             foreach (DataColumn column in dataTable.Columns)
             {
-                dataGridView1.Columns.Add(column.ColumnName, column.ColumnName);
+                dataGridView1.Columns.Add("Column"+column.ColumnName, column.ColumnName);
             }
 
             // Add rows to DataGridView
