@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>PipeViewer</RootNamespace>
     <AssemblyName>PipeViewer</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -71,6 +71,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPipeProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPipeProperties.Designer.cs">
+      <DependentUpon>FormPipeProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PipeChat.resx">
       <DependentUpon>PipeChat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPipeProperties.resx">
+      <DependentUpon>FormPipeProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -224,6 +233,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\search %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\user_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\group-icon.jpg" />
+    <Content Include="Resources\Lock.png" />
+    <Content Include="Resources\User-icon-256-blue.png" />
+    <None Include="Resources\windows-user-icon-10.jpg" />
+    <None Include="Resources\userIcon.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
