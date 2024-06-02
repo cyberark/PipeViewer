@@ -600,7 +600,6 @@ namespace PipeViewer
             pipeChat.Show();
         }
 
-        //TODO Check
         private void openPipeProperties (object sender, EventArgs e)
         {
             if (m_CurrentRowIndexRightClick >= 0)
@@ -1179,7 +1178,6 @@ namespace PipeViewer
         }
 
 
-        //TODO Check   
         private void propertiesFromStripMenu(object sender, EventArgs e)
         {
             openPipeProperties(sender, e);

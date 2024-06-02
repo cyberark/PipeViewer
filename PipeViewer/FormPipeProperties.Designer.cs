@@ -33,11 +33,16 @@
             this.propertiesTab = new System.Windows.Forms.TabControl();
             this.GeneralTab = new System.Windows.Forms.TabPage();
             this.GroupBoxBasicInfo = new System.Windows.Forms.GroupBox();
+            this.textBoxGrantedAccess = new System.Windows.Forms.TextBox();
+            this.textBoxObjectAddress = new System.Windows.Forms.TextBox();
+            this.textBoxType = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.lblGrantedAccess = new System.Windows.Forms.Label();
             this.lblType = new System.Windows.Forms.Label();
             this.lblObjectAddress = new System.Windows.Forms.Label();
             this.SecurityTab = new System.Windows.Forms.TabPage();
+            this.textBoxName2 = new System.Windows.Forms.TextBox();
             this.groupBoxPermissions = new System.Windows.Forms.GroupBox();
             this.checkBoxDenyExecute = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowedExecute = new System.Windows.Forms.CheckBox();
@@ -79,7 +84,7 @@
             this.propertiesTab.Location = new System.Drawing.Point(12, 12);
             this.propertiesTab.Name = "propertiesTab";
             this.propertiesTab.SelectedIndex = 0;
-            this.propertiesTab.Size = new System.Drawing.Size(715, 588);
+            this.propertiesTab.Size = new System.Drawing.Size(744, 619);
             this.propertiesTab.TabIndex = 0;
             // 
             // GeneralTab
@@ -91,12 +96,16 @@
             this.GeneralTab.Location = new System.Drawing.Point(4, 31);
             this.GeneralTab.Name = "GeneralTab";
             this.GeneralTab.Padding = new System.Windows.Forms.Padding(3);
-            this.GeneralTab.Size = new System.Drawing.Size(707, 553);
+            this.GeneralTab.Size = new System.Drawing.Size(736, 584);
             this.GeneralTab.TabIndex = 0;
             this.GeneralTab.Text = "General";
             // 
             // GroupBoxBasicInfo
             // 
+            this.GroupBoxBasicInfo.Controls.Add(this.textBoxGrantedAccess);
+            this.GroupBoxBasicInfo.Controls.Add(this.textBoxObjectAddress);
+            this.GroupBoxBasicInfo.Controls.Add(this.textBoxType);
+            this.GroupBoxBasicInfo.Controls.Add(this.textBoxName);
             this.GroupBoxBasicInfo.Controls.Add(this.lblName);
             this.GroupBoxBasicInfo.Controls.Add(this.lblGrantedAccess);
             this.GroupBoxBasicInfo.Controls.Add(this.lblType);
@@ -105,10 +114,60 @@
             this.GroupBoxBasicInfo.Location = new System.Drawing.Point(6, 6);
             this.GroupBoxBasicInfo.Name = "GroupBoxBasicInfo";
             this.GroupBoxBasicInfo.Padding = new System.Windows.Forms.Padding(2);
-            this.GroupBoxBasicInfo.Size = new System.Drawing.Size(695, 285);
+            this.GroupBoxBasicInfo.Size = new System.Drawing.Size(727, 322);
             this.GroupBoxBasicInfo.TabIndex = 4;
             this.GroupBoxBasicInfo.TabStop = false;
             this.GroupBoxBasicInfo.Text = "Basic Information";
+            // 
+            // textBoxGrantedAccess
+            // 
+            this.textBoxGrantedAccess.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBoxGrantedAccess.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxGrantedAccess.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxGrantedAccess.Location = new System.Drawing.Point(168, 215);
+            this.textBoxGrantedAccess.Margin = new System.Windows.Forms.Padding(1);
+            this.textBoxGrantedAccess.Multiline = true;
+            this.textBoxGrantedAccess.Name = "textBoxGrantedAccess";
+            this.textBoxGrantedAccess.Size = new System.Drawing.Size(548, 78);
+            this.textBoxGrantedAccess.TabIndex = 7;
+            // 
+            // textBoxObjectAddress
+            // 
+            this.textBoxObjectAddress.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBoxObjectAddress.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxObjectAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxObjectAddress.Location = new System.Drawing.Point(154, 157);
+            this.textBoxObjectAddress.Margin = new System.Windows.Forms.Padding(1);
+            this.textBoxObjectAddress.Multiline = true;
+            this.textBoxObjectAddress.Name = "textBoxObjectAddress";
+            this.textBoxObjectAddress.Size = new System.Drawing.Size(562, 28);
+            this.textBoxObjectAddress.TabIndex = 6;
+            // 
+            // textBoxType
+            // 
+            this.textBoxType.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBoxType.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxType.Location = new System.Drawing.Point(78, 103);
+            this.textBoxType.Margin = new System.Windows.Forms.Padding(1);
+            this.textBoxType.Multiline = true;
+            this.textBoxType.Name = "textBoxType";
+            this.textBoxType.Size = new System.Drawing.Size(638, 26);
+            this.textBoxType.TabIndex = 5;
+            // 
+            // textBoxName
+            // 
+            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxName.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBoxName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxName.Location = new System.Drawing.Point(87, 48);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(1);
+            this.textBoxName.Multiline = true;
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(637, 26);
+            this.textBoxName.TabIndex = 4;
             // 
             // lblName
             // 
@@ -116,7 +175,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(23, 48);
+            this.lblName.Location = new System.Drawing.Point(16, 48);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(58, 20);
             this.lblName.TabIndex = 0;
@@ -128,7 +187,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGrantedAccess.AutoSize = true;
-            this.lblGrantedAccess.Location = new System.Drawing.Point(23, 216);
+            this.lblGrantedAccess.Location = new System.Drawing.Point(16, 215);
             this.lblGrantedAccess.Name = "lblGrantedAccess";
             this.lblGrantedAccess.Size = new System.Drawing.Size(135, 20);
             this.lblGrantedAccess.TabIndex = 3;
@@ -140,7 +199,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblType.AutoSize = true;
-            this.lblType.Location = new System.Drawing.Point(23, 102);
+            this.lblType.Location = new System.Drawing.Point(16, 103);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(50, 20);
             this.lblType.TabIndex = 1;
@@ -152,7 +211,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblObjectAddress.AutoSize = true;
-            this.lblObjectAddress.Location = new System.Drawing.Point(23, 157);
+            this.lblObjectAddress.Location = new System.Drawing.Point(16, 157);
             this.lblObjectAddress.Margin = new System.Windows.Forms.Padding(2);
             this.lblObjectAddress.Name = "lblObjectAddress";
             this.lblObjectAddress.Size = new System.Drawing.Size(130, 20);
@@ -162,6 +221,7 @@
             // SecurityTab
             // 
             this.SecurityTab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.SecurityTab.Controls.Add(this.textBoxName2);
             this.SecurityTab.Controls.Add(this.groupBoxPermissions);
             this.SecurityTab.Controls.Add(this.lblName2);
             this.SecurityTab.Controls.Add(this.groupBoxSecurity);
@@ -169,9 +229,18 @@
             this.SecurityTab.Location = new System.Drawing.Point(4, 31);
             this.SecurityTab.Name = "SecurityTab";
             this.SecurityTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SecurityTab.Size = new System.Drawing.Size(707, 553);
+            this.SecurityTab.Size = new System.Drawing.Size(736, 584);
             this.SecurityTab.TabIndex = 1;
             this.SecurityTab.Text = "Security";
+            // 
+            // textBoxName2
+            // 
+            this.textBoxName2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBoxName2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxName2.Location = new System.Drawing.Point(150, 30);
+            this.textBoxName2.Name = "textBoxName2";
+            this.textBoxName2.Size = new System.Drawing.Size(494, 20);
+            this.textBoxName2.TabIndex = 4;
             // 
             // groupBoxPermissions
             // 
@@ -193,7 +262,7 @@
             this.groupBoxPermissions.Controls.Add(this.lblRead);
             this.groupBoxPermissions.Controls.Add(this.lblFullControl);
             this.groupBoxPermissions.Controls.Add(this.listViewPermissions);
-            this.groupBoxPermissions.Location = new System.Drawing.Point(42, 235);
+            this.groupBoxPermissions.Location = new System.Drawing.Point(40, 270);
             this.groupBoxPermissions.Name = "groupBoxPermissions";
             this.groupBoxPermissions.Size = new System.Drawing.Size(616, 276);
             this.groupBoxPermissions.TabIndex = 3;
@@ -384,7 +453,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblName2.AutoSize = true;
-            this.lblName2.Location = new System.Drawing.Point(21, 16);
+            this.lblName2.Location = new System.Drawing.Point(88, 30);
             this.lblName2.Name = "lblName2";
             this.lblName2.Size = new System.Drawing.Size(73, 20);
             this.lblName2.TabIndex = 1;
@@ -393,7 +462,7 @@
             // groupBoxSecurity
             // 
             this.groupBoxSecurity.Controls.Add(this.listViewUsers);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(42, 50);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(40, 85);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(616, 179);
             this.groupBoxSecurity.TabIndex = 2;
@@ -421,12 +490,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 612);
+            this.ClientSize = new System.Drawing.Size(768, 643);
             this.Controls.Add(this.propertiesTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PipePropertiesForm";
             this.Text = "Properties";
-            this.Load += new System.EventHandler(this.PipeProperties_Load);
             this.propertiesTab.ResumeLayout(false);
             this.GeneralTab.ResumeLayout(false);
             this.GroupBoxBasicInfo.ResumeLayout(false);
@@ -475,5 +543,10 @@
         private System.Windows.Forms.Label lblExecute;
         private System.Windows.Forms.CheckBox checkBoxAllowedExecute;
         private System.Windows.Forms.CheckBox checkBoxDenyExecute;
+        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBoxType;
+        private System.Windows.Forms.TextBox textBoxObjectAddress;
+        private System.Windows.Forms.TextBox textBoxGrantedAccess;
+        private System.Windows.Forms.TextBox textBoxName2;
     }
 }

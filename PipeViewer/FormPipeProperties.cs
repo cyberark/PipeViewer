@@ -36,21 +36,23 @@ namespace PipeViewer
             listViewUsers.SmallImageList = userImageList;
 
             //General Tab
-            lblName.Text = "Name:    " + pipeData["ColumnName"];
-            lblType.Text = "Type:    " + pipeData["ColumnPipeType"];
-            lblObjectAddress.Text ="Handle:    " + pipeData["ColumnHandle"];
-            lblGrantedAccess.Text = "Granted Access:    " + pipeData["ColumnGrantedAccessGeneric"];
+            lblName.Text = "Name: ";
+            textBoxName.Text = pipeData["ColumnName"];
+            lblType.Text = "Type: ";
+            textBoxType.Text = pipeData["ColumnPipeType"];
+            lblObjectAddress.Text = "Handle: ";
+            textBoxObjectAddress.Text = pipeData["ColumnHandle"];
+            lblGrantedAccess.Text = "Granted Access: ";
+            textBoxGrantedAccess.Text = pipeData["ColumnGrantedAccess"];
 
             //Security Tab
-            lblName2.Text = "Name:    " + pipeData["ColumnName"];
+            lblName2.Text = "Name: ";
+            textBoxName2.Text = pipeData["ColumnName"];
             ParsePermissions(pipeData["ColumnPermissions"]);
             PopulateUsersListView();
             listViewUsers.SelectedIndexChanged += listViewUsers_SelectedIndexChanged;
         }
-        private void PipeProperties_Load(object sender, EventArgs e)
-        {
 
-        }
         private void ParsePermissions(string permissionsText)
         {
             if (string.IsNullOrEmpty(permissionsText))
@@ -189,6 +191,6 @@ namespace PipeViewer
                 deniedCheckBox.Checked = false;
             }
         }
-     
+
     }
 }
