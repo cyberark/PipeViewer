@@ -682,10 +682,5 @@ namespace PipeViewer
             return result;
             
         }
-
-        private void PipeChatForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

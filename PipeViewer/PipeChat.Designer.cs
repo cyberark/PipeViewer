@@ -140,7 +140,7 @@ namespace PipeViewer
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 31);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -154,7 +154,7 @@ namespace PipeViewer
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(926, 329);
+            this.dataGridView1.Size = new System.Drawing.Size(926, 308);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
@@ -220,7 +220,7 @@ namespace PipeViewer
             this.findButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(926, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(926, 27);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -230,7 +230,7 @@ namespace PipeViewer
             this.refresToolStripButton.Image = global::PipeViewer.Properties.Resources.refresh;
             this.refresToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.refresToolStripButton.Name = "refresToolStripButton";
-            this.refresToolStripButton.Size = new System.Drawing.Size(29, 28);
+            this.refresToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.refresToolStripButton.Text = "Reconnect";
             this.refresToolStripButton.Click += new System.EventHandler(this.refresToolStripButton_Click);
             // 
@@ -240,7 +240,7 @@ namespace PipeViewer
             this.exportToCsvButton.Image = global::PipeViewer.Properties.Resources.csv_export;
             this.exportToCsvButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.exportToCsvButton.Name = "exportToCsvButton";
-            this.exportToCsvButton.Size = new System.Drawing.Size(29, 28);
+            this.exportToCsvButton.Size = new System.Drawing.Size(29, 24);
             this.exportToCsvButton.Text = "Expot To CSV";
             this.exportToCsvButton.Click += new System.EventHandler(this.exportToCsvButton_Click);
             // 
@@ -250,7 +250,7 @@ namespace PipeViewer
             this.rawExportToolStripButton.Image = global::PipeViewer.Properties.Resources.export;
             this.rawExportToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rawExportToolStripButton.Name = "rawExportToolStripButton";
-            this.rawExportToolStripButton.Size = new System.Drawing.Size(29, 28);
+            this.rawExportToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.rawExportToolStripButton.Text = "Raw export";
             this.rawExportToolStripButton.Click += new System.EventHandler(this.rawExportToolStripButton_Click);
             // 
@@ -260,7 +260,7 @@ namespace PipeViewer
             this.importStripButton.Image = global::PipeViewer.Properties.Resources.import;
             this.importStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.importStripButton.Name = "importStripButton";
-            this.importStripButton.Size = new System.Drawing.Size(29, 28);
+            this.importStripButton.Size = new System.Drawing.Size(29, 24);
             this.importStripButton.Text = "Import from file";
             this.importStripButton.Click += new System.EventHandler(this.importStripButton_Click);
             // 
@@ -270,7 +270,7 @@ namespace PipeViewer
             this.findButton.Image = global::PipeViewer.Properties.Resources.find;
             this.findButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.findButton.Name = "findButton";
-            this.findButton.Size = new System.Drawing.Size(29, 28);
+            this.findButton.Size = new System.Drawing.Size(29, 24);
             this.findButton.Text = "Search";
             this.findButton.Click += new System.EventHandler(this.findButton_Click);
             // 
@@ -311,12 +311,12 @@ namespace PipeViewer
             this.tabControl1.Controls.Add(this.TextTab);
             this.tabControl1.Controls.Add(this.BinaryTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControl1.Location = new System.Drawing.Point(0, 360);
+            this.tabControl1.Location = new System.Drawing.Point(0, 335);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Padding = new System.Drawing.Point(0, 0);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(926, 98);
+            this.tabControl1.Size = new System.Drawing.Size(926, 123);
             this.tabControl1.TabIndex = 6;
             // 
             // TextTab
@@ -325,7 +325,7 @@ namespace PipeViewer
             this.TextTab.Location = new System.Drawing.Point(4, 25);
             this.TextTab.Name = "TextTab";
             this.TextTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TextTab.Size = new System.Drawing.Size(918, 69);
+            this.TextTab.Size = new System.Drawing.Size(918, 94);
             this.TextTab.TabIndex = 0;
             this.TextTab.Text = "Text";
             this.TextTab.UseVisualStyleBackColor = true;
@@ -340,7 +340,7 @@ namespace PipeViewer
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
             this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox.Size = new System.Drawing.Size(912, 63);
+            this.textBox.Size = new System.Drawing.Size(912, 88);
             this.textBox.TabIndex = 2;
             this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
             this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
@@ -351,7 +351,7 @@ namespace PipeViewer
             this.BinaryTab.Location = new System.Drawing.Point(4, 25);
             this.BinaryTab.Name = "BinaryTab";
             this.BinaryTab.Padding = new System.Windows.Forms.Padding(3);
-            this.BinaryTab.Size = new System.Drawing.Size(918, 69);
+            this.BinaryTab.Size = new System.Drawing.Size(918, 94);
             this.BinaryTab.TabIndex = 1;
             this.BinaryTab.Text = "Binary";
             this.BinaryTab.UseVisualStyleBackColor = true;
@@ -365,7 +365,7 @@ namespace PipeViewer
             this.chatHexBox.Location = new System.Drawing.Point(3, 3);
             this.chatHexBox.Name = "chatHexBox";
             this.chatHexBox.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.chatHexBox.Size = new System.Drawing.Size(912, 63);
+            this.chatHexBox.Size = new System.Drawing.Size(912, 88);
             this.chatHexBox.StringViewVisible = true;
             this.chatHexBox.TabIndex = 0;
             this.chatHexBox.UseFixedBytesPerLine = true;
@@ -406,7 +406,6 @@ namespace PipeViewer
             this.Name = "PipeChatForm";
             this.Text = "PipeChat";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PipeChat_FormClosing);
-            this.Load += new System.EventHandler(this.PipeChatForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
