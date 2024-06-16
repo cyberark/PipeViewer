@@ -600,6 +600,26 @@ namespace PipeViewer
             pipeChat.Show();
         }
 
+        private void openPipeProperties (object sender, EventArgs e)
+        {
+            if (m_CurrentRowIndexRightClick >= 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.Rows[m_CurrentRowIndexRightClick];
+                Dictionary<string, string> rowData = new Dictionary<string, string>();
+
+                foreach (DataGridViewCell cell in selectedRow.Cells)
+                {
+                    rowData[cell.OwningColumn.Name] = cell.Value?.ToString();
+                }
+
+                PipePropertiesForm pipeProperties = new PipePropertiesForm(rowData);
+                pipeProperties.Show();
+            }
+            else
+            {
+                MessageBox.Show("No pipe selected.");
+            }
+        }
         private void FindWindow_searchForMatch(string i_SearchString, bool i_SearchDown, bool i_MatchWholeWord, bool i_MatchSensitive)
         {
             int startIndex = 0;
@@ -1077,6 +1097,7 @@ namespace PipeViewer
         {
             FormAbout about = new FormAbout();
             about.ShowDialog();
+
             //            MessageBox.Show(@"Author: Eviatar Gerzi (@g3rzi)
             //Contributers: Natan Tunik
             //Version: 1.0
@@ -1143,10 +1164,24 @@ namespace PipeViewer
                 contextMenuStripRightClickGridView.Items.Add(ChatWithToolItem);
             }
 
+            // Third Separator
+            ToolStripSeparator thirdSeparator = new ToolStripSeparator();
+            contextMenuStripRightClickGridView.Items.Add(thirdSeparator);
+
+            //TODO Check - Properties.
+            ToolStripMenuItem propertiesToolItem = new ToolStripMenuItem("Properties");
+            propertiesToolItem.Font = new Font(propertiesToolItem.Font, FontStyle.Bold);
+            propertiesToolItem.Click += new EventHandler(propertiesFromStripMenu);
+            contextMenuStripRightClickGridView.Items.Add(propertiesToolItem);
+
             return toolStripMenuItems;
         }
 
 
+        private void propertiesFromStripMenu(object sender, EventArgs e)
+        {
+            openPipeProperties(sender, e);
+        }
 
         private void chatWithPipeFromStripMenu(object sender, EventArgs e)
         {
