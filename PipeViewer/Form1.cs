@@ -221,6 +221,20 @@ namespace PipeViewer
             {
                 addNamedPipeToDataGridView(namedPipe);
             });
+
+            this.Invoke(new Action(() =>
+            {
+                if (m_FormHightlightWindow != null)
+                {
+                    m_FormHightlightWindow.OnHighlightRowsUpdate(m_LastListViewHighlighFilter);
+                }
+
+                if (m_FormColumnFilter != null)
+                {
+                    m_FormColumnFilter.OnFilterOKUpdate(m_LastListViewColumnFilter);
+                }
+            }));
+
         }
 
         int CountSelectedRows(DataGridView dataGridView)
@@ -570,8 +584,9 @@ namespace PipeViewer
                 //TimeSpan elapsedTime = stopwatch.Elapsed;
                 //MessageBox.Show($"Task completed in {elapsedTime.TotalMilliseconds} milliseconds", "Task Completed");
             });
+
         }
-        
+
 
         private void openFindWindow()
         {
