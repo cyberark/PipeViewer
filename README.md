@@ -16,8 +16,21 @@ PipeViewer is a GUI tool that allows users to view details about Windows Named p
 
 Double-click the EXE binary and you will get the list of all named pipes.   
 
-## Build    
-We used Visual Studio to compile it.  
+## Build
+Build the PipeViewer project using Visual Studio or the command line. Here's how:
+### Using Visual Studio
+Open `PipeViewer.sln` in Visual Studio.
+Navigate to Build > Batch Build > Select "Release" for PipeViewer and click `Build`.
+### Using Command Line
+Open a Command Prompt and navigate to your project directory.
+   ```bash
+   cd path\to\PipeViewer
+   msbuild PipeViewer.sln /p:Configuration=Release /p:Platform="Any CPU"
+  ```
+- Make sure that MSBuild is added to your system's PATH or provide the full path to the MSBuild executable.
+ 
+The executable will be created in: 'C:\path\to\PipeViewer\PipeViewer\bin\Release'.
+
 When downloading it from GitHub you might get error of block files, you can use PowerShell to unblock them:  
 ```powershell
 Get-ChildItem -Path 'D:\tmp\PipeViewer-main' -Recurse | Unblock-File
