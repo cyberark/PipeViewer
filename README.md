@@ -59,6 +59,11 @@ We want to thank James Forshaw ([@tyranid](https://github.com/tyranid)) for crea
 Copyright (c) 2023 CyberArk Software Ltd. All rights reserved  
 This repository is licensed under  Apache-2.0 License - see [`LICENSE`](LICENSE) for more details.
 
+## ❤️ Showcase 
+  * Presented at Insomnihack 2023 ["Breaking Docker's Named Pipes SYSTEMatically"](https://www.youtube.com/watch?v=03z6o_YOw8M)
+  * Presented at TyphoonCon 2023 ["Breaking Docker's Named Pipes SYSTEMatically"](https://typhooncon.com/breaking-dockers-pipes/)
+  * A case study by Nir Chako while using Pipeviewer ["Piping Hot Fortinet VCulnerabilities"](https://pentera.io/resources/research/two-zero-days-forticlient-vpn-2024/)   
+
 ## References
 For more comments, suggestions or questions, you can contact Eviatar Gerzi ([@g3rzi](https://twitter.com/g3rzi)) and CyberArk Labs.
 
